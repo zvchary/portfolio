@@ -41,9 +41,8 @@
             transition: margin-left 0.5s ease-in-out;
         }
         .copyright {
-            position: absolute;
-            bottom: 35px;
-            right: 35px;
+            position: relative;
+            bottom:0px;
             font-size: 1.5vh;
             color: black;
             user-select: none;
@@ -105,8 +104,9 @@
         }
         .bottom-links {
             position: absolute;
-            bottom: 5px;
+            bottom: 0px;
             margin-left: 0px;
+            margin-bottom: 35px;
         }
         .bottom-links span {
             display: block;
@@ -179,6 +179,7 @@
             body {
                 max-height: none;
                 font-size: 1.75vh;
+                justify-content: space-between;
             }
             .bottom-links {
                 z-index: 1000;
@@ -200,8 +201,8 @@
                 margin-left: 40%;
             }
             .copyright {
-                bottom: 35px;
-                left: 45px;
+                bottom: 0px;
+                left: 0px;
             }
             .mobiletextbox {
                 display: contents;
@@ -210,7 +211,6 @@
     </style>
 </head>
 <body>
-<div class="copyright">© 2025 Zach Montgomery</div>
 <div class="left-container">
     <span class="clickable"><a href="index.html">✻ Zach Montgomery</a></span><br><br><br>
     <div class="mobiletextbox">
@@ -219,9 +219,7 @@
         <a href="https://commonwealthtimes.org/"><u>Commonwealh Times</u></a> 
         and a Studio Monitor at 
         <a href="https://www.studiotwothree.org/"><u>Studio Two Three.</u></a><br><br><br>
-        <div class="bottom-links">
-            <span class="clickable"><a href="#" id="aboutLink">➝ About</a></span>
-        </div>
+        
     </div>
     <input type="checkbox" class="toggle" id="works-toggle">
     <label for="works-toggle" class="works clickable">✁ Works</label>
@@ -234,7 +232,11 @@
         <li><a href="collectionsposter.html" class="clickable" onmouseover="changeImage('image5')" onmouseout="fadeOutImage()">Collections Poster</a></li>
         <li><a href="printmaterial.html" class="clickable" onmouseover="changeImage('image6')" onmouseout="fadeOutImage()">Various Printed Material</a></li>
     </ul>
-</div>
+    <div class="bottom-links">
+        <span class="clickable"><a href="#" id="aboutLink">➝ About</a></span>
+        <div class="copyright">© 2025 Zach Montgomery</div>
+        </div>
+    </div>
 <div class="right-container">
     <div id="overlay" class="white-overlay"></div>
     <div class="text-container">
