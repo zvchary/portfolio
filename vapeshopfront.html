@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vape Shop Front</title>
+    <style>
+        @font-face {
+            font-family: 'Xanh Mono';
+            src: url('XanhMono-Regular.woff2') format('woff2'),
+                 url('XanhMono-Regular.woff') format('woff'),
+                 url('XanhMono-Regular.ttf') format('truetype');
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Xanh Mono', monospace;
+            background-color: #ffffff;
+            font-size: 2vh;
+            padding: 35px;
+            padding-left: 45px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            min-height: 100vh;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 10px;
+            height: 100%;
+            background: linear-gradient(0deg, rgba(255,0,0,1) 0%, rgba(0,255,0,1) 50%, rgba(0,0,255,1) 100%);
+        }
+        a:link, a:visited {
+            text-decoration: none;
+            color: black;
+            cursor: pointer;
+            transition: color 0.7s ease;
+        }
+        a:hover {
+            color: #ff9900;
+        }
+        .content-container {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 35px;
+        }
+        .text-section {
+            flex: 1;
+            text-align: left;
+            margin-right: 80px;
+            width: 100%;
+        }
+        .gallery-container {
+            flex: 1;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        .gallery {
+            display: flex;
+            width: 100%;
+        }
+        .gallery img {
+            width: 100%;
+            height: auto;
+            flex-shrink: 0;
+            cursor: pointer;
+            object-fit: cover;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            overflow: auto;
+            padding-top: 60px;
+        }
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 80%;
+            left: 50%;
+            top: 50%;
+            transform: scale(1);
+            transition: transform 0.25s ease;
+        }
+        .zoomed-in {
+            transform: scale(2);
+        }
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            color: #fff;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .title {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            text-align: left;
+            justify-content: left;
+        }
+        .clickable {
+            cursor: pointer;
+            transition: color 0.7s ease;
+        }
+        #prevBtn, #nextBtn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 0, 0);
+            color: #ffffff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            z-index: 1001;
+        }
+        #prevBtn {
+            left: 15px;
+        }
+        #nextBtn {
+            right: 15px;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 1s ease-out, background 2s ease-in-out;
+        }
+        .overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        @media screen and (max-width: 768px) {
+            .content-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .gallery {
+                display: block;
+                margin-top: 35px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="title"><a href="index.html">↖ Zach Montgomery</a></div>
+    <div class="content-container">
+        <div class="text-section">
+            <p><i>Vape Shop Front</i> (2024)</p>
+            <br>Chrome Extension<br><br><br>
+            <p>A chrome extension that turns practically any website into a vape store front made as a final project for Herdimas Anggara's Fall 2024 PLATFORM SABOTAGE Class.</p><br>
+            Why, you ask? Why not?<br><br>
+            Malicious and obnoxious in nature, this extension integrates itself to the innerworkings of each website it visits, randomly generating flashy signs and flags. The faux-LED strips highlight random div elements on the site, exposing hidden structures and imperfections in the unique design of each site.
+            <br><br>
+            This extension is available on the Chrome store <a href="https://chromewebstore.google.com/detail/vape-shop-front/jffmcdhikeohcodbbjlicaageokpmkpl?hl=en"><u>here.</u></a><br>Special thanks to Herdimas for the inspiration and help with the code.
+        </div>
+        <div class="gallery-container">
+            <div class="gallery">
+                <img src="https://i.postimg.cc/W1VLxLHK/vape1.gif" alt="Image 1" loading="lazy">
+                <img src="https://i.postimg.cc/qRSWL9K1/vape2.gif" alt="Image 2" loading="lazy">
+                <img src="https://i.postimg.cc/qMf9CH4R/vapeshop3.gif" alt="Image 3" loading="lazy">
+                <img src="https://i.postimg.cc/fRDpB73Q/vapeshop4.png" alt="Image 4" loading="lazy">
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="imageModal">
+        <span class="close" id="closeModal">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <button id="prevBtn">❮</button>
+        <button id="nextBtn">❯</button>
+    </div>
+    <div class="overlay" id="overlay"></div>
+    <script>
+        window.onload = function() {
+            const overlay = document.getElementById('overlay');
+            overlay.classList.add('hidden');
+        };
+        const images = [
+            { src: "https://i.postimg.cc/W1VLxLHK/vape1.gif", alt: "Image 1" },
+            { src: "https://i.postimg.cc/qRSWL9K1/vape2.gif", alt: "Image 2" },
+            { src: "https://i.postimg.cc/qMf9CH4R/vapeshop3.gif", alt: "Image 3" },
+            { src: "https://i.postimg.cc/fRDpB73Q/vapeshop4.png", alt: "Image 4" },
+        ];
+        let currentImageIndex = 0;
+        const gallery = document.querySelector(".gallery");
+        let autoSlideInterval;
+        function showImage() {
+            const modalImg = document.getElementById("modalImage");
+            modalImg.src = images[currentImageIndex].src;
+            modalImg.classList.remove("zoomed-in");
+        }
+        function updateGallery() {
+            gallery.style.transform = `translateX(-${currentImageIndex * 100}%)`;
+        }
+        function startAutoSlide() {
+            if (window.innerWidth > 768) {
+                autoSlideInterval = setInterval(() => {
+                    currentImageIndex = (currentImageIndex + 1) % images.length;
+                    updateGallery();
+                    showImage();
+                }, 4000);
+            }
+        }
+        function stopAutoSlide() {
+            clearInterval(autoSlideInterval);
+        }
+        startAutoSlide();
+        document.querySelectorAll(".gallery img").forEach((img, index) => {
+            img.onclick = function() {
+                currentImageIndex = index;
+                showImage();
+                stopAutoSlide();
+                document.getElementById("imageModal").style.display = "block";
+            };
+        });
+        document.getElementById("closeModal").onclick = function() {
+            document.getElementById("imageModal").style.display = "none";
+            startAutoSlide();
+        };
+        window.onclick = function(event) {
+            if (event.target == document.getElementById("imageModal")) {
+                document.getElementById("imageModal").style.display = "none";
+                startAutoSlide();
+            }
+        };
+        document.getElementById("prevBtn").onclick = function() {
+            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+            showImage();
+        };
+        document.getElementById("nextBtn").onclick = function() {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            showImage();
+        };
+        document.getElementById("modalImage").onclick = function() {
+            const modalImg = document.getElementById("modalImage");
+            modalImg.classList.toggle("zoomed-in");
+        };
+        window.addEventListener('resize', function() {
+            if (window.innerWidth <= 768) {
+                stopAutoSlide();
+            } else {
+                startAutoSlide();
+            }
+        });
+    </script>
+</body>
+</html>

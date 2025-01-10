@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scales of Indifference</title>
+    <style>
+        @font-face {
+            font-family: 'Xanh Mono';
+            src: url('XanhMono-Regular.woff2') format('woff2'),
+                 url('XanhMono-Regular.woff') format('woff'),
+                 url('XanhMono-Regular.ttf') format('truetype');
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Xanh Mono', monospace;
+            background-color: #ffffff;
+            font-size: 2vh;
+            padding: 35px;
+            padding-left: 45px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            min-height: 100vh;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 10px;
+            height: 100%;
+            background: linear-gradient(rgba(213,62,3,1) 0%, rgba(127,161,217,1) 100%);
+        }
+        a:link, a:visited {
+            text-decoration: none;
+            color: black;
+            cursor: pointer;
+            transition: color 0.7s ease;
+        }
+        a:hover {
+            color: #ff9900;
+        }
+        .content-container {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 35px;
+        }
+        .text-section {
+            flex: 1;
+            text-align: left;
+            margin-right: 80px;
+            width: 100%;
+        }
+        .gallery-container {
+            flex: 1;
+            width: 80%;
+            overflow: hidden;
+            overflow-y: auto;
+            position: relative;
+            max-height: none;
+        }
+        .gallery {
+            display: flex;
+            width: 100%;
+        }
+        .gallery img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            flex-shrink: 0;
+            cursor: pointer;
+            max-width: 100%;
+            max-height: 100%;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            overflow: auto;
+            padding-top: 60px;
+        }
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 80%;
+            left: 50%;
+            top: 50%;
+            transform: scale(1);
+            transition: transform 0.25s ease;
+        }
+        .zoomed-in {
+            transform: scale(2);
+        }
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            color: #fff;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .title {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            text-align: left;
+            justify-content: left;
+        }
+        .clickable {
+            cursor: pointer;
+            transition: color 0.7s ease;
+        }
+        #prevBtn, #nextBtn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 0, 0);
+            color: #ffffff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            z-index: 1001;
+        }
+        #prevBtn {
+            left: 15px;
+        }
+        #nextBtn {
+            right: 15px;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 1s ease-out, background 2s ease-in-out;
+        }
+        .overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        @media screen and (max-width: 768px) {
+            .content-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .gallery {
+                display: block;
+                width: 100%;
+                margin-top: 35px;
+            }
+            .gallery img {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="title"><a href="index.html">↖ Zach Montgomery</a></div>
+    <div class="content-container">
+        <div class="text-section">
+            <p><i>Scales of Indifference</i> (2024 – Present)</p>
+            <br>Graphic Design Open Call Exhibition co-curated with Jenna Casey at <a href="https://arts.vcu.edu/community-campus/the-anderson/"><u>The Anderson</u></a><br><br><br>
+            <p>Born out of passion, this ongoing collaborative venture began as an opportunity to showcase an underrepresented discipline in a fine arts space. Our work on this show involved months of research, organization, and collaboration to develop an exhibition of works from designers that reflected upon unique experiences of time. The submissions were juried by Lauren Thorson, nicole killian, and Herdimas Anggara—faculty in the Department of Graphic Design at VCUarts.</p><br>
+            <p>The final show exhibited the works of 15 students in the Graphic Design program From September 20 – October 11, 2024. Recently, Jenna and I were awarded with an Undergraduate Research Grant from VCUarts to pursue developing an exhibition catalogue that'll detail the curatorial process and development of the exhibition. This project is set to be finalized by Summer 2025.</p><br>
+            <p>Some of my work involved in the show is the development of print materials for advertising and design of the exhibition identity. I developed the letterpress and risograph-printed posters and the exhibition wall vinyl. Photos of exhibition by <a href="https://www.instagram.com/sollessartist/"><u>Jerry Pleasant III.</u></a></p>
+        </div>
+        <div class="gallery-container">
+            <div class="gallery">
+                <img src="https://i.postimg.cc/qMZ8g48h/scalesposter.png" alt="Image 1" loading="lazy">
+                <img src="https://i.postimg.cc/fW7swbQC/show2.png" alt="Image 2" loading="lazy">
+                <img src="https://i.postimg.cc/DZ2gL5m8/showvinyl.png" alt="Image 3" loading="lazy">
+                <img src="https://i.postimg.cc/WpYDwStx/show1.png" alt="Image 4" loading="lazy">
+                <img src="https://i.postimg.cc/ZK1xVJCk/soirisoanim.gif" alt="Image 5" loading="lazy">
+                <img src="https://i.postimg.cc/jd8G5wgH/show3.png" alt="Image 6" loading="lazy">
+                <img src="https://i.postimg.cc/vBLKdcx6/show4.png" alt="Image 7" loading="lazy">
+                <img src="https://i.postimg.cc/bwD1tWT6/scalesposter2.jpg" alt="Image 8" loading="lazy">
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="imageModal">
+        <span class="close" id="closeModal">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <button id="prevBtn">❮</button>
+        <button id="nextBtn">❯</button>
+    </div>
+    <div class="overlay" id="overlay"></div>
+    <script>
+        window.onload = function() {
+            const overlay = document.getElementById('overlay');
+            overlay.classList.add('hidden');
+        };
+        const images = [
+            { src: "https://i.postimg.cc/qMZ8g48h/scalesposter.png", alt: "Image 1" },
+            { src: "https://i.postimg.cc/fW7swbQC/show2.png", alt: "Image 2" },
+            { src: "https://i.postimg.cc/DZ2gL5m8/showvinyl.png", alt: "Image 3" },
+            { src: "https://i.postimg.cc/WpYDwStx/show1.png", alt: "Image 4" },
+            { src: "https://i.postimg.cc/ZK1xVJCk/soirisoanim.gif", alt: "Image 5" },
+            { src: "https://i.postimg.cc/jd8G5wgH/show3.png", alt: "Image 6" },
+            { src: "https://i.postimg.cc/vBLKdcx6/show4.png", alt: "Image 7" },
+            { src: "https://i.postimg.cc/bwD1tWT6/scalesposter2.jpg", alt: "Image 8" }
+        ];
+        let currentImageIndex = 0;
+        const gallery = document.querySelector(".gallery");
+        let autoSlideInterval;
+        function showImage() {
+            const modalImg = document.getElementById("modalImage");
+            modalImg.src = images[currentImageIndex].src;
+            modalImg.classList.remove("zoomed-in");
+        }
+        function updateGallery() {
+            gallery.style.transform = `translateX(-${currentImageIndex * 100}%)`;
+        }
+        function startAutoSlide() {
+            if (window.innerWidth > 768) {
+                autoSlideInterval = setInterval(() => {
+                    currentImageIndex = (currentImageIndex + 1) % images.length;
+                    updateGallery();
+                    showImage();
+                }, 4000);
+            }
+        }
+        function stopAutoSlide() {
+            clearInterval(autoSlideInterval);
+        }
+        startAutoSlide();
+        document.querySelectorAll(".gallery img").forEach((img, index) => {
+            img.onclick = function() {
+                currentImageIndex = index;
+                showImage();
+                stopAutoSlide();
+                document.getElementById("imageModal").style.display = "block";
+            };
+        });
+        document.getElementById("closeModal").onclick = function() {
+            document.getElementById("imageModal").style.display = "none";
+            startAutoSlide();
+        };
+        window.onclick = function(event) {
+            if (event.target == document.getElementById("imageModal")) {
+                document.getElementById("imageModal").style.display = "none";
+                startAutoSlide();
+            }
+        };
+        document.getElementById("prevBtn").onclick = function() {
+            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+            showImage();
+        };
+        document.getElementById("nextBtn").onclick = function() {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            showImage();
+        };
+        document.getElementById("modalImage").onclick = function() {
+            const modalImg = document.getElementById("modalImage");
+            modalImg.classList.toggle("zoomed-in");
+        };
+        window.addEventListener('resize', function() {
+            if (window.innerWidth <= 768) {
+                stopAutoSlide();
+            } else {
+                startAutoSlide();
+            }
+        });
+    </script>
+</body>
+</html>

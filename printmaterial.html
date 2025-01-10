@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Various Print Material</title>
+    <link rel="preload" href="" as="image">
+    <link rel="preload" href="" as="image">
+    <link rel="preload" href="" as="image">
+    <link rel="preload" href="" as="image">
+    <style>
+        @font-face {
+            font-family: 'Xanh Mono';
+            src: url('XanhMono-Regular.woff2') format('woff2'),
+                 url('XanhMono-Regular.woff') format('woff'),
+                 url('XanhMono-Regular.ttf') format('truetype');
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Xanh Mono', monospace;
+            background-color: #ffffff;
+            font-size: 2vh;
+            padding: 35px;
+            padding-left: 45px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            min-height: 100vh;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 10px;
+            height: 100%;
+            background: #ff9900;
+        }
+        a:link, a:visited {
+            text-decoration: none;
+            color: black;
+            cursor: pointer;
+            transition: color 0.7s ease;
+        }
+        a:hover {
+            color: #ff9900;
+        }
+        .projects-list {
+            margin-top: 15px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            width: 100%;
+            align-items: flex-start;
+        }
+        .project {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            margin: 0;
+            border: 2px solid #ff9900;
+            padding: 20px;
+            margin-top: 15px;
+            height: auto;
+            box-sizing: border-box;
+            flex-shrink: 0;
+        }
+        .project img {
+            width: 100%;
+            height: auto;
+            cursor: pointer;
+        }
+        .project p {
+            margin-top: 10px;
+        }
+        .gallery-container {
+            margin-top: 20px;
+            margin-bottom: 0;
+        }
+        .project:nth-child(4) .gallery {
+            display: flex;
+            gap: 5px;
+        }
+        .project:nth-child(4) .gallery img {
+            width: 49%;
+            height: auto;
+            object-fit: cover;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .overlay img {
+            max-width: 80%;
+            max-height: 90%;
+        }
+        .overlay1 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 1s ease-out;
+        }
+        .overlay1.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        @media screen and (max-width: 768px) {
+            .projects-list {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .project {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="title"><a href="index.html">↖ Zach Montgomery</a></div>
+    <div class="projects-list">
+        <div class="project">
+            <p><i>NOTHING TO SEE HERE </i>(2024)</p>
+            <p>Shower curtain liner, Silkscreen print</p>
+            <p>A moldy shower curtain liner installation that challenges VCU's updated posting policy in the wake of Pro-palestinian postings. Ugly, unsubtle, unsettling, and purposefully neglected to address seemingly invisible issues.</p>
+            <div class="gallery-container">
+                <div class="gallery">
+                    <img src="https://i.postimg.cc/VNNbhSMv/NOTHING.jpg" alt="NOTHING TO SEE HERE" loading="lazy">
+                    <img src="https://i.postimg.cc/TwzLhCs5/NOTHING2.jpg" alt="NOTHING TO SEE HERE" loading="lazy">
+                </div>
+            </div>
+        </div>
+        <div class="project">
+            <p><i>Utilitarian Label Stickers to Label your Lifestyle so you can Label Things that don't Need Labeling.</i> (2024)</p>
+            <p>Risograph printed stickers</p>
+            <p>Freaky Femme DIVA? Hmmm...<br> How about, Fragile Gluten-free Masc?</p>
+            <div class="gallery-container">
+                <div class="gallery">
+                    <img src="https://i.postimg.cc/cJd9Bdbx/utilitarian.jpg" alt="Utilitarian Stickers" loading="lazy">
+                    <img src="https://i.postimg.cc/dDMnkFCK/utilitarian3.jpg" alt="Utilitarian Stickers" loading="lazy">
+                </div>
+            </div>
+        </div>
+        <div class="project">
+            <p><i>Pumpkin postcards</i> (2024)</p>
+            <p>Risograph printed postcards for Halloween</p>
+            <div class="gallery-container">
+                <div class="gallery">
+                    <img src="https://i.postimg.cc/GmLBBBXK/pumpkins1.jpg" alt="Pumpkin Post Cards" loading="lazy">
+                    <img src="https://i.postimg.cc/vmDczJF6/pumpkins2.jpg" alt="Pumpkin Post Cards" loading="lazy">
+                </div>
+            </div>
+        </div>
+        <div class="project">
+            <p><i>2024 VCUarts Senior Capstone Exhibition</i> (2024)</p>
+            <p>Posters + Exhibition Identity</p>
+            <p>Developed print and digital assets for the 2024 Senior Capstone Exhibition at VCUarts. This was done as part of my Spring 2024 Social Media Internship with the on-campus gallery, The Anderson.</p>
+            <div class="gallery-container">
+                <div class="gallery">
+                    <img src="https://i.postimg.cc/NFjHfzFk/seniorcapstone.jpg" alt="Senior Capstone" loading="lazy">
+                    <img src="https://i.postimg.cc/xT7zng2L/seniorcapstone2.jpg" alt="Senior Capstone" loading="lazy">
+                </div>
+            </div>
+        </div>
+        <div class="project">
+            <p><i>VCU Student Media Center Open House</i> (2024)</p>
+            <p>Risograph printed poster</p>
+            <div class="gallery-container">
+                <div class="gallery">
+                    <img src="https://i.postimg.cc/T2b5BvyV/openhouse.jpg" alt="Open House Poster" loading="lazy">
+                </div>
+            </div>
+        </div>
+        <div class="project">
+            <p><i>Invitational Cards</i> (2023)</p>
+            <p>Laserjet on cover stock w/ Risograph overlay</p>
+            <div class="gallery-container">
+                <div class="gallery">
+                    <img src="https://i.postimg.cc/VLjM0Pmf/invitational-card.jpg" alt="Invitational Cards" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="overlay" id="overlay">
+        <img id="zoomed-img" src="" alt="Zoomed Image">
+    </div>
+    <div class="overlay1" id="overlay1"></div>
+    <script>
+        window.onload = function() {
+            const overlay1 = document.getElementById('overlay1');
+            overlay1.classList.add('hidden');
+        };
+        window.addEventListener('resize', function() {
+            if (window.innerWidth <= 768) {
+                stopAutoSlide();
+            } else {
+                startAutoSlide();
+            }
+        });
+        const images = document.querySelectorAll('.project img');
+        const overlay = document.getElementById('overlay');
+        const zoomedImg = document.getElementById('zoomed-img');
+        images.forEach(image => {
+            image.addEventListener('click', () => {
+                zoomedImg.src = image.src;
+                overlay.style.display = 'flex';
+            });
+        });
+        overlay.addEventListener('click', () => {
+            overlay.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
