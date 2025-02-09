@@ -17,6 +17,12 @@
             padding: 0;
             box-sizing: border-box;
         }
+        a, u {
+            display: inline-block;
+            margin: 0;  
+            padding: 0; 
+            white-space: nowrap; 
+        }
         a:link, a:visited {
             text-decoration: none;
             color: black;
@@ -26,6 +32,9 @@
         a:hover {
             color: #ff9900;
         }
+        a.active {
+            color: #ff9900; 
+        }
         body {
             font-family: 'Xanh Mono', monospace;
             font-size: 2vh;
@@ -34,6 +43,9 @@
             height: 100vh;
             overflow: hidden;
             transition: margin-left 0.5s ease-in-out;
+        }
+        hr {
+            border-top: 1px solid;
         }
         .copyright {
             position: relative;
@@ -47,33 +59,19 @@
             display: none;
         }
         .right-container img {
-            width: 150px;
-            max-width: 80%;
-            height: auto;
+            height: 350px;
+            max-height: 70%;
+            max-width: 70%;
+            width: auto;
         }
         .left-container, .right-container {
-            width: 50%;
             padding: 35px;
             background-color: #fff;
             transition: margin-left 0.5s ease;
-        }
-        .white-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: white;
-            opacity: 1;
-            visibility: visible;
-            transition: opacity 1s ease-out, visibility 1s ease-out;
-            z-index: 999;
-        }
-        .white-overlay.fade-out {
-            opacity: 0;
-            visibility: hidden;
+            overflow: hidden;
         }
         .left-container {
+            width: 40%;
             overflow-y: auto;
             border-left-width: 10px;
             border-left-color: #ff9900;
@@ -85,6 +83,7 @@
         }
         .projects {
             list-style-type: none;
+            margin-top: none;
             font-style: italic;
             padding-left: 20px;
             max-height: 0;
@@ -96,10 +95,72 @@
             max-height: none;
             overflow-y: visible;
         }
+        .project-item {
+            display: none; 
+            flex: 1;
+            transition: all 0.3s ease;
+            overflow-y: scroll;
+            padding-right: 35px;
+        }
+        .project-item.active {
+            display: block;
+        }
+        .image-gallery {
+            display: flex;
+            overflow-x: auto; 
+            gap: 10px; 
+            padding-bottom: 12px;
+        }
+        .image-gallery img {
+            max-height: 175px;
+            max-width: 500px;
+            width: auto; 
+            height: auto; 
+            object-fit: contain;
+            cursor:pointer;
+        }
+        ::-webkit-scrollbar {
+            height: 10px;
+            scrollbar-width: thin;
+        }
+        ::-webkit-scrollbar-thumb,::-webkit-scrollbar-vertical {
+            background-color: #ff9900;
+            border-radius: 10px;
+        }
+        .expanded-image-container {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8); 
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+        .expanded-image-container img {
+            object-fit: contain; 
+        }
+        .close-expanded {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .close-expanded:hover {
+            color: #ff9900;
+        }
+
         .toggle:checked + .works + .projects {
             max-height: none;
             overflow-y: visible;
-
         }
         .bottom-links {
             position: absolute;
@@ -112,19 +173,27 @@
             margin-bottom: 30px;
         }
         .right-container {
-            width: 60%;
-            text-align: right;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            width:60%;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding-left: 35px;
+            padding-right: 35px;
             position: relative;
-            overflow: hidden;
-            padding-right: 0px;
+        }
+        .text-container, .image-box {
+            display: none;
         }
         .text-container {
             z-index: 10;
             width: 100%;
+            overflow: hidden; 
             padding-right: 35px;
+            display:inline;
+            flex-direction: column;  
+            justify-content: flex-start; 
+            align-items: flex-start; 
+            transition: align-items 0.3s ease, justify-content 0.3s ease;
         }
         .image-box {
             position: absolute;
@@ -207,52 +276,203 @@
     </style>
 </head>
 <body>
-<div class="left-container">
-    <span class="clickable"><a href="index.html">✻ Zach Montgomery</a></span><br><br><br>
-    <div class="mobiletextbox">
-        Zach is a multidisciplinary designer and student based in Richmond, VA.<br>
-        He is currently a Graphic Designer at the 
-        <a href="https://commonwealthtimes.org/"><u>Commonwealh Times</u></a> 
-        and a Studio Monitor at 
-        <a href="https://www.studiotwothree.org/"><u>Studio Two Three.</u></a><br><br><br>
-        
-    </div>
-    <input type="checkbox" class="toggle" id="works-toggle">
-    <label for="works-toggle" class="works clickable">✁ Works</label>
-    <ul class="projects">
-        <br><br>
-        <li><a href="miclcliclclihhi.html" class="clickable" onmouseover="changeImage('image1')" onmouseout="fadeOutImage()">M I CL CL I CL CL I H H I</a></li>
-        <li><a href="scalesofindifference.html" class="clickable" onmouseover="changeImage('image2')" onmouseout="fadeOutImage()">Scales of Indifference</a></li>
-        <li><a href="richmondsmell.html" class="clickable" onmouseover="changeImage('image3')" onmouseout="fadeOutImage()">richmondsmell.com</a></li>
-        <li><a href="vapeshopfront.html" class="clickable" onmouseover="changeImage('image4')" onmouseout="fadeOutImage()">Vape Shop Front</a></li>
-        <li><a href="collectionsposter.html" class="clickable" onmouseover="changeImage('image5')" onmouseout="fadeOutImage()">Collections Poster</a></li>
-        <li><a href="printmaterial.html" class="clickable" onmouseover="changeImage('image6')" onmouseout="fadeOutImage()">Various Printed Material</a></li>
-    </ul>
-    <div class="bottom-links">
-        <span class="clickable"><a href="#" id="aboutLink">➝ About</a></span>
-        <div class="copyright">© 2025 Zach Montgomery</div>
+    <div class="left-container">
+        <span class="clickable"><a href="index.html">✻ Zach Montgomery</a></span><br><br><br>
+        <div class="mobiletextbox">
+            Zach is a multidisciplinary designer and student based in Richmond, VA.<br>
+            He is currently a Graphic Designer at the 
+            <a href="https://commonwealthtimes.org/"><u>Commonwealth Times</u></a><br>and a Studio Monitor at 
+            <a href="https://www.studiotwothree.org/"><u>Studio Two Three.</u></a><br><br>
+        </div>
+        <input type="checkbox" class="toggle" id="works-toggle">
+        <label for="works-toggle" class="works clickable">✁ Works</label>
+        <ul class="projects"><br><br>
+            <li><a href="miclcliclclihhi.html" class="clickable]" data-project="project1,">M I CL CL I CL CL I H H I</a></li>
+            <li><a href="scalesofindifference.html" class="clickable" data-project="project2,">Scales of Indifference</a></li>
+            <li><a href="richmondsmell.html" class="clickable" data-project="project3,">richmondsmell.com</a></li>
+            <li><a href="vapeshopfront.html" class="clickable" data-project="project4,">Vape Shop Front</a></li>
+            <li><a href="collectionsposter.html" class="clickable" data-project="project5,">Collections Poster</a></li>
+            <li><a href="vapeshopfront.html" class="clickable" data-project="project6,">Various Printed Material</a></li>
+        </ul>
+        <div class="bottom-links">
+            <span class="clickable"><a href="#" id="aboutLink">➝ About</a></span>
+            <div class="copyright">© 2025 Zach Montgomery</div>
         </div>
     </div>
-<div class="right-container">
-    <div id="overlay" class="white-overlay"></div>
-    <div class="text-container">
-        Zach is a multidisciplinary designer and student based in Richmond, VA.<br>
-        He is currently a Graphic Designer at the 
-        <a href="https://commonwealthtimes.org/"><u>Commonwealh Times</u></a><br> 
-        and a Studio Monitor at 
-        <a href="https://www.studiotwothree.org/"><u>Studio Two Three.</u></a><br><br>
-        <img src="slackpfp.jpg">
+
+    <div class="right-container">
+        <div class="expanded-image-container" id="expandedImageContainer">
+            <button class="close-expanded" id="closeExpanded">&times;</button>
+            <img id="expandedImage" src="" alt="Expanded Image">
+        </div>
+        <div class="text-container" id="textContainer">
+            <img src="slackpfp.jpg">
+            Zach is a multidisciplinary designer and student based in Richmond, VA.<br>
+            He is currently a Graphic Designer at the 
+            <a href="https://commonwealthtimes.org/"><u>Commonwealth Times</u></a><br>and a Studio Monitor at 
+            <a href="https://www.studiotwothree.org/"><u>Studio Two Three.</u></a><br><br>
+        </div>
+        <div id="imageBox" class="image-box"></div>
+        <div class="project-item" id="project1">
+            <div class="image-gallery">
+                <img src="https://i.postimg.cc/FzFkTBQJ/IMG-9413.jpg" alt="Project Image 1">
+                <img src="https://i.postimg.cc/pVkFmRDQ/IMG-9480.jpg" alt="Project Image 2">
+                <img src="https://i.postimg.cc/0QswwNWn/IMG-9406.jpg" alt="Project Image 3">
+                <img src="https://i.postimg.cc/FKcSzSZ1/IMG-9386.jpg" alt="Project Image 4">
+                <img src="https://i.postimg.cc/GtM8Vxcg/IMG-9445.jpg" alt="Project Image 5">
+                <img src="https://i.postimg.cc/BQ61Dkgr/IMG-9529.jpg" alt="Project Image 6">
+                <img src="https://i.postimg.cc/02BKCnXb/IMG-9534.jpg" alt="Project Image 7">
+                <img src="https://i.postimg.cc/jSnw3fBv/IMG-9541.jpg" alt="Project Image 8">
+            </div><br>
+            <p><i>M I CROOKED LETTER CROOKED LETTER I CROOKED LETTER<br> CROOKED LETTER I HUMPBACK HUMPBACK I</i>(2024)</p><br>
+            Steel, Silkscreen print, Inkjet magnetic paper + cover stock, HTML/CSS/JS<br><br><br>
+            <p>This interactive piece takes on three different forms: a website, a road sign, and a magnetic poetry kit. The steel sign shows a map of the southeast US, spanning from Virginia upwards all the way to the state that sits between Alabama and Louisiana. From shame and discontentment to nostalgia, the magnetic poetry kit contains a collection of 100+ words deriving from various references, emotions, and experiences I have attached to where I’m from.<br><br>The magnetic words from the kit can be arranged on the map, inviting people to bring in their own interpretations to the collection. The corrugated plastic sign affixed below mimics a bandit sign, luring users to access a survey. This website generates a customized poetry kit centered around the users’ ideas of home. The words entered from the responses can then be shifted and rearranged to form new meanings and thoughts around the concept of home and belonging. This digital experience emulates much of what went into making the physical poetry kit and map.</p><br>Access the site <a href="https://homemagnets.netlify.app/"><u>↗ Here</u></a>
+        </div>
+        <div class="project-item" id="project2">
+            <div class="image-gallery">
+                <img src="https://i.postimg.cc/qMZ8g48h/scalesposter.png" alt="Project Image 1">
+                <img src="https://i.postimg.cc/fW7swbQC/show2.png" alt="Project Image 2">
+                <img src="https://i.postimg.cc/DZ2gL5m8/showvinyl.png" alt="Project Image 3">
+                <img src="https://i.postimg.cc/WpYDwStx/show1.png" alt="Project Image 4">
+                <img src="https://i.postimg.cc/ZK1xVJCk/soirisoanim.gif" alt="Project Image 5">
+                <img src="https://i.postimg.cc/jd8G5wgH/show3.png" alt="Project Image 6">
+                <img src="https://i.postimg.cc/vBLKdcx6/show4.png" alt="Project Image 7">
+                <img src="https://i.postimg.cc/bwD1tWT6/scalesposter2.jpg" alt="Project Image 8">
+            </div><br>
+            <p><i>Scales of Indifference</i> (2024 – Present)</p>
+            <br>Graphic Design Open Call Exhibition co-curated with Jenna Casey at <a href="https://arts.vcu.edu/community-campus/the-anderson/"><u>The Anderson</u></a><br><br><br>
+            <p>Born out of passion, this ongoing collaborative venture began as an opportunity to showcase an underrepresented discipline in a fine arts space. Our work on this show involved months of research, organization, and collaboration to develop an exhibition of works from designers that reflected upon unique experiences of time. The submissions were juried by Lauren Thorson, nicole killian, and Herdimas Anggara—faculty in the Department of Graphic Design at VCUarts.</p><br>
+            <p>The final show exhibited the works of 15 students in the Graphic Design program From September 20 – October 11, 2024. Recently, Jenna and I were awarded with an Undergraduate Research Grant from VCUarts to pursue developing an exhibition catalogue that'll detail the curatorial process and development of the exhibition. This project is set to be finalized by Summer 2025.</p><br>
+            <p>Some of my work involved in the show is the development of print materials for advertising and design of the exhibition identity. I developed the letterpress and risograph-printed posters and the exhibition wall vinyl. Photos of exhibition by <a href="https://www.instagram.com/sollessartist/"><u>Jerry Pleasant III.</u></a></p>
+        </div>
+        <div class="project-item" id="project3">
+            <div class="image-gallery">
+                <img src="https://i.postimg.cc/v8vm0hTG/Streetposter.gif" alt="Project Image 1">
+                <img src="https://i.postimg.cc/X7VkPsgL/website.gif" alt="Project Image 2">
+                <img src="https://i.postimg.cc/Y2Nq1rGs/rsposting3.jpg" alt="Project Image 3">
+                <img src="https://i.postimg.cc/9FV0SRH2/richmondsmelldoc.jpg" alt="Project Image 4">
+                <img src="https://i.postimg.cc/Z5nFb02y/website2.gif" alt="Project Image 5">
+                <img src="https://i.postimg.cc/FKfHc03y/rsposting1.jpg" alt="Project Image 6">
+                <img src="https://i.postimg.cc/xd9WVQTc/rsposting4.jpg" alt="Project Image 7">
+            </div><br>
+            <p><i>richmondsmell.com</i> (2024)</p>
+            <br>HTML/CSS/JS, Silkscreen print, Plastic Bags, Found objects<br><br><br>
+            <p>Richmondsmell.com is a multimedia web and print-based project made in Herdimas 
+                Anggara's Fall 2024 PLATFORM SABOTAGE Class. Tasked with generating a satirical
+                conspiracy theory, <i>similar to the <a href="https://en.wikipedia.org/wiki/Birds_Aren%27t_Real">
+                <u>Birds Aren't Real</u> </a>campaign,</i> this multimedia project uses outrageous rhetoric,
+                falsified online resources, and even a form for users to submit 'odor reports' to create an
+                immersive online world around a mysterious phenomenon in the city of Richmond, VA.</p><br>
+                <p>Flyers with mysterious contents relating to the described 'odor' were posted
+                around campus, causing one online user to post images of the mysterious postings
+                on the <a href="https://www.reddit.com/r/rva/comments/1g84895/what_are_these_flyers_around_vcu_campus/"><u>reddit
+                page for Richmond, VA.</u></a> Ever since, Richmond residents report various instances of
+                odors floating around the city, becoming an inside joke for many residents online.  
+                </p><br>
+                <p>Initially pinning the source of this odor on the 'PhlegmMorrisUS' cigarette production
+                facility just south of the city, submissions from local residents of various odors
+                have stretched the satirical timeline of this project to new lengths. In a world of misinformation 
+                and conspiracies flying around the internet at unimaginable speeds, this project seeks to 
+                subvert these challenges by using the language of outrageousness and deception to find a 
+                sense of humor and bonding in the midst of all the chaos.</p><br>
+                Visit <a href="https://www.richmondsmell.com"><u>↗ richmondsmell.com</u></a>
+        </div>
+        <div class="project-item" id="project4">
+            <div class="image-gallery">
+                <img src="https://i.postimg.cc/W1VLxLHK/vape1.gif" alt="Project Image 1">
+                <img src="https://i.postimg.cc/qRSWL9K1/vape2.gif" alt="Project Image 2">
+                <img src="https://i.postimg.cc/qMf9CH4R/vapeshop3.gif" alt="Project Image 3">
+                <img src="https://i.postimg.cc/fRDpB73Q/vapeshop4.png" alt="Project Image 4">
+            </div><br>
+            <p><i>Vape Shop Front</i> (2024)</p>
+            <br>Chrome Extension<br><br><br>
+            <p>A chrome extension that turns practically any website into a vape store front made as a final project for Herdimas Anggara's Fall 2024 PLATFORM SABOTAGE Class.</p><br>
+            Why, you ask? Why not? Malicious and obnoxious in nature, this extension integrates 
+            itself to the innerworkings of each website it visits, randomly generating flashy signs and flags. 
+            The faux-LED strips highlight random div elements on the site, exposing hidden structures and imperfections 
+            in the unique design of each site.
+            <br><br>
+            This extension is available on the Chrome store <a href="https://chromewebstore.google.com/detail/vape-shop-front/jffmcdhikeohcodbbjlicaageokpmkpl?hl=en"><u>here.</u></a><br>Special thanks to Herdimas for the inspiration and help with the code.
+        </div>
+        <div class="project-item" id="project5">
+            <div class="image-gallery">
+                <img src="https://i.postimg.cc/TwwhtBzD/collectionsposter.jpg" alt="Project Image 1">
+                <img src="https://i.postimg.cc/fWPSrTTT/collectionsposter-1.jpg" alt="Project Image 2">
+                <img src="https://i.postimg.cc/kgmQTXfR/emboss-final2.jpg" alt="Project Image 3">
+                <img src="https://i.postimg.cc/j2ffhGfh/emboss5.jpg" alt="Project Image 4">
+                <img src="https://i.postimg.cc/7P5n6R5h/emboss-final.jpg" alt="Project Image 5">
+            </div><br>
+            <p><i>Collections Poster </i>(2023)</p>
+            <br>Inkjet on A0 Matte Paper with embossings, collection of 200 typeless icons<br><br><br>
+            <p>This project recontextualizes indexical and symbol-based hazard iconography by altering the 
+                context in which these universal pictographs are presented. The collection is shaped by the 
+                concept of Symbols and Indexes from Charles Sanders Peirce’s Semiotic theory. The safety 
+                pictograms are image and context-based, which are crucial for their purpose, ensuring they 
+                remain recognizable and readable.</p><br>
+                <p>The poster, A1-sized with a matte white exterior, features intricate raised designs on two 
+                folds. Upon closer inspection, embossed safety pictographs of varying sizes and sharp, round
+                dotted patterns accompany the icons. Opening the folds reveals an A0-sized display showcasing
+                the full collection. Red and blue, two key colors from the collection, dominate the design 
+                along with gridded pictographs. These are paired with complex motifs referencing hazard iconography.
+                The subtle exterior contrasts with the bold interior, together shifting the interpretability
+                of the hazard pictographs.
+                </p>
+        </div>
+        <div class="project-item" id="project6">
+            <div class="image-gallery">
+                <img src="https://i.postimg.cc/VNNbhSMv/NOTHING.jpg" alt="Project Image 1">
+                <img src="https://i.postimg.cc/TwzLhCs5/NOTHING2.jpg" alt="Project Image 2">
+            </div><br>
+            <p><i>NOTHING TO SEE HERE </i>(2024)</p><br>
+            <p>Shower curtain liner, Silkscreen print</p><br>
+            <p>A moldy shower curtain liner installation that challenges VCU's updated posting policy in the wake of Pro-palestinian postings. Ugly, unsubtle, unsettling, and purposefully neglected to address seemingly invisible issues.</p>
+            <br><br><hr/><br><br>
+            <div class="image-gallery">
+                <img src="https://i.postimg.cc/cJd9Bdbx/utilitarian.jpg" alt="Project Image 1">
+                <img src="https://i.postimg.cc/dDMnkFCK/utilitarian3.jpg" alt="Project Image 2">
+            </div><br>
+            <p><i>Utilitarian Label Stickers to Label your Lifestyle so you can Label Things that don't Need Labeling.</i> (2024)</p><br>
+            <p>Risograph printed stickers</p><br>
+            <p>Freaky Femme DIVA? Hmmm...<br> How about, Fragile Gluten-free Masc?</p>
+            <br><br><hr/><br><br>
+            <div class="image-gallery">
+                <img src="https://i.postimg.cc/GmLBBBXK/pumpkins1.jpg" alt="Project Image 1">
+                <img src="https://i.postimg.cc/vmDczJF6/pumpkins2.jpg" alt="Project Image 2">
+            </div><br>
+            <p><i>Pumpkin postcards</i> (2024)</p><br>
+            <p>Risograph printed postcards for Halloween</p>
+            <br><br><hr/><br><br>
+            <div class="image-gallery">
+                <img src="https://i.postimg.cc/NFjHfzFk/seniorcapstone.jpg" alt="Project Image 1">
+                <img src="https://i.postimg.cc/xT7zng2L/seniorcapstone2.jpg" alt="Project Image 2">
+            </div><br>
+            <p><i>2024 VCUarts Senior Capstone Exhibition</i> (2024)</p><br>
+            <p>Posters + Exhibition Identity</p><br>
+            <p>Developed print and digital assets for the 2024 Senior Capstone Exhibition at VCUarts. This was done as part of my Spring 2024 Social Media Internship with the on-campus gallery, The Anderson.</p>
+            <br><br><hr/><br><br>
+            <div class="image-gallery">
+                <img src="https://i.postimg.cc/T2b5BvyV/openhouse.jpg" alt="Project Image 1">
+            </div><br>
+            <p><i>VCU Student Media Center Open House</i> (2024)</p><br>
+            <p>Risograph printed poster</p>
+            <br><br><hr/><br><br>
+            <div class="image-gallery">
+                <img src="https://i.postimg.cc/VLjM0Pmf/invitational-card.jpg" alt="Project Image 1">
+            </div><br>
+            <p><i>Invitational Cards</i> (2023)</p><br>
+            <p>Laserjet on cover stock w/ Risograph overlay</p>
+            <br><br><hr/><br><br>
+        </div>
     </div>
-    <div id="imageBox" class="image-box"></div>
-</div>
-<div class="third-container" id="thirdContainer">
-    <p>Zach's practice is specialized in editorial design and traditional printing mediums.</p>
-    <p>His work often explores the mundane and utilitarian of everyday life, seeking ways to exploit these qualities and extract new meanings.</p><br>
-    <a href="mailto:zm@zachmontgomery.us"><u>zm@zachmontgomery.us</u></a><br><br>
-    <a href="ZM25Resume.pdf"><u>↗ Resume</u></a><br>
-    <a href="ZM25CV.pdf"><u>↗ CV</u></a><br>
-    <a href="https://www.linkedin.com/in/zach-montgomery-13b935235/"><u>↗ Linkedin</u></a><br>
-</div>
+    </div>
+    <div class="third-container" id="thirdContainer">
+        <p>Zach's practice is specialized in editorial design and traditional printing mediums.</p>
+        <p>His work often explores the mundane and utilitarian of everyday life, seeking ways to exploit these qualities and extract new meanings.</p><br>
+        <a href="mailto:zm@zachmontgomery.us"><u>zm@zachmontgomery.us</u></a><br><br>
+        <a href="ZM25Resume.pdf"><u>↗ Resume</u></a><br>
+        <a href="ZM25CV.pdf"><u>↗ CV</u></a><br>
+        <a href="https://www.linkedin.com/in/zach-montgomery-13b935235/"><u>↗ Linkedin</u></a><br>
+    </div>
 <script>
     window.addEventListener('load', function () {
         const overlay = document.getElementById('overlay');
@@ -260,33 +480,16 @@
             overlay.classList.add('fade-out');
         }, 500);
     });
-    let fadeTimeout;
-    function changeImage(imageName) {
+
+    function changeProject(imageName, projectText) {
         const imageBox = document.getElementById('imageBox');
-        clearTimeout(fadeTimeout);
+        const textContainer = document.getElementById('textContainer');
+
         imageBox.style.visibility = "visible";
         imageBox.style.opacity = "1";
-        if (imageName === 'image1') {
-            imageBox.style.backgroundImage = "url('https://i.postimg.cc/KYMzMQ4B/IMG-9541.jpg')";
-        } else if (imageName === 'image2') {
-            imageBox.style.backgroundImage = "url('https://i.postimg.cc/kGRHvXwh/scalesofindifference.jpg')";
-        } else if (imageName === 'image3') {
-            imageBox.style.backgroundImage = "url('https://i.postimg.cc/9FV0SRH2/richmondsmelldoc.jpg')";
-        } else if (imageName === 'image4') {
-            imageBox.style.backgroundImage = "url('https://i.postimg.cc/8cGmN4g1/vapeshopfront.png')";
-        } else if (imageName === 'image5') {
-            imageBox.style.backgroundImage = "url('https://i.postimg.cc/TwwhtBzD/collectionsposter.jpg')";
-        } else if (imageName === 'image6') {
-            imageBox.style.backgroundImage = "url('https://i.postimg.cc/rmrrdrNK/stickers.gif')";
-        }
+        textContainer.innerHTML = projectText;
     }
-    function fadeOutImage() {
-        const imageBox = document.getElementById('imageBox');
-        imageBox.style.opacity = "0";
-        fadeTimeout = setTimeout(function() {
-            imageBox.style.visibility = "hidden";
-        }, 500);
-    }
+
     const aboutLink = document.getElementById('aboutLink');
     const thirdContainer = document.getElementById('thirdContainer');
     const body = document.body;
@@ -299,6 +502,75 @@
         leftContainer.classList.toggle('active');
         rightContainer.classList.toggle('active');
     });
+    var expandedImageContainer = document.getElementById("expandedImageContainer");
+        var expandedImage = document.getElementById("expandedImage");
+        var closeExpanded = document.getElementById("closeExpanded");
+
+        var images = document.querySelectorAll('.image-gallery img');
+
+        images.forEach(function(image) {
+            image.addEventListener('click', function() {
+                expandedImageContainer.style.display = "flex"; 
+                expandedImage.src = image.src;
+            });
+        });
+        closeExpanded.onclick = function() {
+            expandedImageContainer.style.display = "none";
+        }
+
+        
+        expandedImageContainer.onclick = function(event) {
+            if (event.target === expandedImageContainer) {
+                expandedImageContainer.style.display = "none";
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', function () {
+        const projectLinks = document.querySelectorAll('.projects a');
+        const projectItems = document.querySelectorAll('.project-item');
+        const textContainer = document.getElementById('textContainer');
+        const imageBox = document.getElementById('imageBox');
+        
+       
+        const defaultText = `
+            <img src="slackpfp.jpg"><br><br>
+                Zach is a multidisciplinary designer and student based in Richmond, VA.<br>
+                He is currently a Graphic Designer at the 
+                <a href="https://commonwealthtimes.org/"><u>Commonwealth Times</u></a><br>and a Studio Monitor at 
+                <a href="https://www.studiotwothree.org/"><u>Studio Two Three.</u></a><br><br>
+        `;
+
+        textContainer.innerHTML = defaultText;
+        imageBox.style.visibility = "hidden"; 
+        
+        projectLinks.forEach(link => {
+            link.addEventListener('click', function (e) {
+                if (window.innerWidth > 768) {
+                    e.preventDefault(); 
+                    const projectId = link.dataset.project.split(',')[0]; 
+                    const projectText = link.dataset.project.split(',')[1];
+                    
+                    const isActive = document.getElementById(projectId).classList.contains('active');
+                    
+                    projectItems.forEach(item => item.classList.remove('active'));
+                    projectLinks.forEach(link => link.classList.remove('active'));
+                    
+                    if (!isActive) {
+                        document.getElementById(projectId).classList.add('active');
+                        link.classList.add('active');
+                        
+                        textContainer.innerHTML = projectText; 
+                        imageBox.style.visibility = "visible"; 
+                    } else {
+                        textContainer.innerHTML = defaultText;
+                        imageBox.style.visibility = "hidden"; 
+                    }
+                }
+                
+            });
+        });
+    });
+
 </script>
 </body>
 </html>
