@@ -55,6 +55,16 @@
             user-select: none;
             z-index: 999;
         }
+        .cover-container {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60%; /* same width as your right container */
+            height: 100vh;
+            background-color: white;
+            z-index: 999; /* Ensure it's above the right container */
+            transition: opacity 1s ease-out;
+        }
         .toggle {
             display: none;
         }
@@ -473,12 +483,13 @@
         <a href="ZM25CV.pdf"><u>↗ CV</u></a><br>
         <a href="https://www.linkedin.com/in/zach-montgomery-13b935235/"><u>↗ Linkedin</u></a><br>
     </div>
+    <div id="cover" class="cover-container"></div>
+
 <script>
-    window.addEventListener('load', function () {
-        const overlay = document.getElementById('overlay');
+    window.addEventListener('load', function() {
         setTimeout(function() {
-            overlay.classList.add('fade-out');
-        }, 500);
+            document.getElementById('cover').style.opacity = '0';
+        }, 1000);
     });
 
     function changeProject(imageName, projectText) {
