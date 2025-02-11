@@ -254,7 +254,13 @@
             margin-right: 35px;
             display: none;
         }
+        .rightimage img {
+            height: 175px;
+        }
         @media (max-width: 768px) {
+            .cover-container {
+                display: none;
+            }
             body {
                 max-height: none;
                 font-size: 1.75vh;
@@ -317,7 +323,7 @@
             <img id="expandedImage" src="" alt="Expanded Image">
         </div>
         <div class="text-container" id="textContainer">
-            <img src="ZachPortraitSite.jpg">
+            <div class="rightimage"><img src="ZachPortraitSite.jpg"></div>
             Zach is a multidisciplinary designer and student based in Richmond, VA.<br>
             He is currently a Graphic Designer at the 
             <a href="https://commonwealthtimes.org/"><u>Commonwealth Times</u></a><br>and a Studio Monitor at 
@@ -551,7 +557,7 @@
         
        
         const defaultText = `
-            <img src="ZachPortraitSite.jpg"><br><br>
+            <div class="rightimage"><img src="ZachPortraitSite.jpg"></div><br><br>
                 Zach is a multidisciplinary designer and student based in Richmond, VA.<br>
                 He is currently a Graphic Designer at the 
                 <a href="https://commonwealthtimes.org/"><u>Commonwealth Times</u></a><br>and a Studio Monitor at 
