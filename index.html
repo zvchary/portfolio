@@ -7,13 +7,12 @@
 <link rel="icon" type="image/x-icon" href="flavicon.png">
 
 <style>
-
 @font-face {
-        font-family: 'Xanh Mono';
-        src: url('XanhMono-Regular.woff2') format('woff2'),
-             url('XanhMono-Regular.woff') format('woff'),
-             url('XanhMono-Regular.ttf') format('truetype');
-        }
+    font-family: 'Xanh Mono';
+    src: url('XanhMono-Regular.woff2') format('woff2'),
+         url('XanhMono-Regular.woff') format('woff'),
+         url('XanhMono-Regular.ttf') format('truetype');
+}
 
 * {
     margin: 0;
@@ -22,7 +21,7 @@
 }
 
 body {
-    font-family: 'Xanh Mono', monospace;
+    font-family: 'franklin gothic book';
     font-size: 1.9vh;
     background-color: #ff9900;
     display: flex;
@@ -34,90 +33,77 @@ body {
 a {
     text-decoration: none;
     color: black;
-    transition: color 0.5s ease;
+    transition: color 0.4s ease;
 }
 
 a:hover,
-a.active {
+.tab.active {
     color: #ff9900;
 }
 
-.third-container a:link, .third-container a:visited {
-    color: white;
-    text-decoration: underline;
-}
-
-.third-container a:hover {
-    transition: color 0.5s ease;
-    color: black;
+.tabs {
+    z-index: 100;
 }
 
 .left-container {
     padding: 36px;
     width: 100%;
     height: 100vh;
-    border-left: 10px solid #ff9900;
     position: relative;
+    z-index: 0;
     background: white;
+    transform: translate(10px,0);
+    overflow: hidden;
 }
 
 .image-box {
     display: none;
     position: absolute;
     text-align: center;
-    z-index: 1;
-    top: 30.5%;
-    left: 55%;
+    z-index: -1;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
-    height: 100%;
+    height: 90%;
+    pointer-events: none;
 }
 
 .image-box img {
     height: 100%;
     width: auto;
-    display: inline-block;
 }
 
-.left-container > * {
-    position: relative;
-    z-index: 2;
-}
-
-.clickable, .tabs {
-    z-index: 10;
-}
-
-.bottom-links {
+.arena-counter {
     position: absolute;
-    bottom: 35px;
+    bottom: 36px;
+    right: 36px;
+    font-size: 1.4vh;
+    opacity: 0.45;
+    display: none;
+    pointer-events: none;
 }
 
-.copyright {
-    font-size: 1.5vh;
-    margin-top: 30px;
+.image-arrows {
+    position: absolute;
+    bottom: 31.5px;
+    right: 72px;
+    display: none;
+    gap: 12px;
+    font-size: 2.4vh;
+    font-weight: bold;
+    opacity: 1;
+    z-index: 100;
+    filter: invert(10);
+    mix-blend-mode: difference;
 }
 
-.third-container {
-    font-family: 'franklin gothic';
-    padding: 36px;
-    position: fixed;
-    top: 0;
-    left: -100%;
-    width: 25%;
-    height: 100vh;
-    background-color: #ff9900;
-    color: white;
-    transition: left 0.5s ease-in-out;
-    z-index: 200;
+.image-arrows span {
+    cursor: pointer;
+    user-select: none;
 }
 
-.third-container.active {
-    left: 0;
-}
-
-body.third-active {
-    margin-left: 25%;
-    transition: transform 0.6s ease-in-out;
+.image-arrows span:hover {
+    opacity: 1;
 }
 
 .image-caption {
@@ -127,27 +113,66 @@ body.third-active {
     font-size: 1.4vh;
 }
 
+.bottom-links {
+    position: absolute;
+    bottom: 35px;
+}
+
+.third-container {
+    padding: 36px;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 25%;
+    height: 100vh;
+    background-color: #ff9900;
+    color: white;
+    transition: left 0.6s ease;
+    z-index: 200;
+}
+
+.third-container.active {
+    left: 0;
+}
+
+body.third-active {
+    margin-left: 25%;
+}
+
+body.third-active .image-box {
+    filter: blur(30px);
+    mask-image: linear-gradient(
+        to left,
+        black 0% 10%,
+        transparent 80% 100%
+    );
+    transition: filter 1s ease;
+}
+
+.third-container a:link,
+.third-container a:visited {
+    color: white;
+    text-decoration: underline;
+}
+
+.third-container a:hover {
+    color: black;
+}
+
 @media (max-width: 768px) {
-    body {
-        font-size: 1.75vh;
-    }
-    .left-container {
-        width: 100%;
+    body { font-size: 1.75vh; }
+    .image-box,
+    .image-caption,
+    .image-arrows,
+    .arena-counter {
+        display: none !important;
     }
     .third-container {
         width: 50%;
-        font-family: 'Xanh Mono', monospace;
+        font-family: 'franklin gothic';
     }
     body.third-active {
         margin-left: 50%;
-    }
-    .image-box,
-    .image-caption {
-        display: none !important;
-    }
-    .bottom-links {
-        position: static;
-        margin-top: 40px;
     }
 }
 </style>
@@ -156,30 +181,36 @@ body.third-active {
 <body>
 
 <div class="left-container">
-    
-    <span class="clickable">
-        <a href="#" class="logo">✻ Zach Montgomery</a>
-    </span><br><br>
+
+    <a href="#" class="logo">✻ Zach Montgomery</a><br><br>
 
     <div class="tabs">
-        <a href="#" class="tab" data-link="https://www.are.na/zach-montgomery/editorial-r97gf19ub8s">Editorial</a><br>
-        <a href="#" class="tab" data-link="https://www.are.na/zach-montgomery/identity-sgsfpevhw6o">Identity</a><br>
-        <a href="#" class="tab" data-link="https://www.are.na/zach-montgomery/production-tzfrd9aqfo0">Production</a><br>
-        <a href="#" class="tab" data-link="https://www.are.na/zach-montgomery/teaching-n6ympdwlz9k">Teaching</a><br>
-    </div>
-    <br>
+        <a href="#" class="tab" data-link="https://www.are.na/zach-montgomery/editorial-nlc0okylaly">Editorial</a><br>
+        <a href="#" class="tab" data-link="https://www.are.na/zach-montgomery/identity-px96ygpyvo8">Identity</a><br>
+        <a href="#" class="tab" data-link="https://www.are.na/zach-montgomery/production-il7gunqgnry">Production</a><br>
+        <a href="#" class="tab" data-link="https://www.are.na/zach-montgomery/teaching-shen3nx2bqy">Teaching</a><br>
+    </div><br>
+
     <div class="image-caption" id="imageCaption"></div>
 
     <div class="image-box" id="imageBox">
-        <img src="" alt="Tab Image" id="imageElement">
+        <img src="" id="imageElement">
     </div>
 
+    <div class="image-arrows" id="imageArrows">
+        <span id="prevArrow">&lt;</span>
+        <span id="nextArrow">&gt;</span>
+    </div>
+
+    <div class="arena-counter" id="arenaCounter"></div>
+
+    <!-- ABOUT LINK — restored -->
     <div class="bottom-links">
-        <span class="clickable"><a href="#" id="aboutLink">➝ About</a></span>
-        <div class="copyright">© 2025 Zach Montgomery</div>
+        <a href="#" id="aboutLink">➝ About</a>
     </div>
 </div>
 
+<!-- ABOUT PANEL — restored verbatim -->
 <div class="third-container" id="thirdContainer">
     Zach is a multidisciplinary designer and student based in Richmond, VA.
     He is currently an Art Director at the
@@ -188,8 +219,8 @@ body.third-active {
     <a href="https://www.studiotwothree.org/">Studio Two Three</a>
     <br><br>
     <p>
-        Zach's practice specializes in editorial design and typographic print production.
-        His work explores the constraints of containers as a generative means of production.
+        Zach's practice specializes in editorial design and physical typographic printing.
+        His recent work explores constraints, production, precedents, and translation. 
     </p><br>
     <a href="mailto:zm@zachmontgomery.us">zm@zachmontgomery.us</a><br><br>
     <a href="ZM25Resume.pdf">↗ Resume</a><br>
@@ -209,132 +240,121 @@ const tabs = document.querySelectorAll('.tab');
 const imageBox = document.getElementById('imageBox');
 const imageElement = document.getElementById('imageElement');
 const imageCaption = document.getElementById('imageCaption');
+const arenaCounter = document.getElementById('arenaCounter');
+const imageArrows = document.getElementById('imageArrows');
+const prevArrow = document.getElementById('prevArrow');
+const nextArrow = document.getElementById('nextArrow');
 const logo = document.querySelector('.logo');
 
+let activeTabName = null;
+let isScrolling = false;
+
 const arenaBlocks = {
-    Editorial: [
-        42542131,
-        42525196,
-        42539991,
-        42542530
-    ],
-    Identity: [
-        42535318,
-        42537124,
-        42542203,
-        42542332,
-        42601785,
-        42689521
-    ],
-    Production: [
-        41830306,
-        41830301,
-        41830295,
-        41038168,
-        41038092,
-        41037976,
-        42535514,
-        36813107,
-        42542580,
-        42560386,
-        42590569
-    ],
-    Teaching: [
-        42525144,
-        42535397,
-        42535396,
-        42535395
-    ]
+    Editorial: [42542131, 42525196, 42539991, 42542530],
+    Identity: [42535318, 42537124, 42542203, 42542332, 42601785, 42689521],
+    Production: [41830306, 41830301, 41830295, 41038168, 41038092, 41037976, 42535514, 36813107, 42542580, 42560386, 42590569],
+    Teaching: [42525144, 42535397, 42535396, 42535395, 42565146]
 };
 
 const arenaState = {};
 
-function shuffleArray(array) {
-    return array
-        .map(value => ({ value, sort: Math.random() }))
-        .sort((a, b) => a.sort - b.sort)
-        .map(({ value }) => value);
+function shuffleArray(arr) {
+    return arr.map(v => ({ v, s: Math.random() }))
+              .sort((a, b) => a.s - b.s)
+              .map(o => o.v);
 }
 
-async function fetchArenaBlock(blockId) {
-    try {
-        const res = await fetch(`https://api.are.na/v2/blocks/${blockId}`);
-        if (!res.ok) throw new Error('Are.na fetch failed');
+async function fetchArenaBlock(id) {
+    const res = await fetch(`https://api.are.na/v2/blocks/${id}`);
+    const data = await res.json();
+    return {
+        title: data.title,
+        description: data.description,
+        image: data.image?.original?.url
+    };
+}
 
-        const data = await res.json();
+async function showNextArenaBlock(tabName, direction = 1) {
+    const state = arenaState[tabName];
+    if (!state) return;
 
-        return {
-            title: data.title,
-            description: data.description,
-            image: data.image?.original?.url
-        };
-    } catch (err) {
-        console.error(err);
-        return null;
-    }
+    state.index += direction;
+    if (state.index >= state.order.length) state.index = 0;
+    if (state.index < 0) state.index = state.order.length - 1;
+
+    const block = await fetchArenaBlock(state.order[state.index]);
+    if (!block?.image) return;
+
+    imageElement.src = block.image;
+    imageCaption.textContent = [block.title, block.description].filter(Boolean).join(' — ');
+    imageBox.style.display = 'block';
+    imageArrows.style.display = 'flex';
+
+    arenaCounter.textContent = `${state.index + 1} / ${state.order.length}`;
+    arenaCounter.style.display = 'block';
 }
 
 tabs.forEach(tab => {
-    tab.addEventListener('click', async e => {
+    tab.addEventListener('click', e => {
+        const isMobile = window.innerWidth <= 768;
 
-        if (window.innerWidth <= 768) {
+        if (isMobile) {
             const link = tab.dataset.link;
-            if (link) window.location.href = link;
+            if (link) {
+                window.location.href = link; // 👈 allow visit on mobile
+            }
             return;
         }
 
         e.preventDefault();
 
+        const tabName = tab.textContent.trim();
+        activeTabName = tabName;
+
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
 
-        const tabName = tab.textContent.trim();
-        const blocks = arenaBlocks[tabName];
-        if (!blocks || blocks.length === 0) return;
-
         if (!arenaState[tabName]) {
             arenaState[tabName] = {
-                order: shuffleArray(blocks),
-                index: 0
+                order: shuffleArray(arenaBlocks[tabName]),
+                index: -1
             };
         }
 
-        const state = arenaState[tabName];
-        const blockId = state.order[state.index];
-
-        state.index++;
-
-        if (state.index >= state.order.length) {
-            state.order = shuffleArray(blocks);
-            state.index = 0;
-        }
-
-        const block = await fetchArenaBlock(blockId);
-        if (!block || !block.image) return;
-
-        imageElement.src = block.image;
-
-        const captionText = [block.title, block.description]
-            .filter(Boolean)
-            .join(' — ');
-
-        imageElement.alt = captionText;
-        imageCaption.textContent = captionText;
-
-        imageBox.style.display = 'block';
+        showNextArenaBlock(tabName, 1);
     });
+});
+
+window.addEventListener('wheel', e => {
+    if (!activeTabName || isScrolling) return;
+    isScrolling = true;
+    showNextArenaBlock(activeTabName, e.deltaY > 0 ? 1 : -1);
+    setTimeout(() => isScrolling = false, 450);
+});
+
+window.addEventListener('keydown', e => {
+    if (!activeTabName) return;
+    if (e.key === 'ArrowRight') showNextArenaBlock(activeTabName, 1);
+    if (e.key === 'ArrowLeft') showNextArenaBlock(activeTabName, -1);
+});
+
+nextArrow.addEventListener('click', () => {
+    if (activeTabName) showNextArenaBlock(activeTabName, 1);
+});
+
+prevArrow.addEventListener('click', () => {
+    if (activeTabName) showNextArenaBlock(activeTabName, -1);
 });
 
 logo.addEventListener('click', e => {
     e.preventDefault();
-
     tabs.forEach(t => t.classList.remove('active'));
-
     imageBox.style.display = 'none';
-    imageCaption.textContent = '';
+    imageArrows.style.display = 'none';
+    arenaCounter.style.display = 'none';
+    activeTabName = null;
 });
 </script>
 
-
-
-
+</body>
+</html>
