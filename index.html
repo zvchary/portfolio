@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Zach Montgomery</title>
-<link rel="icon" type="image/x-icon" href="flavicon.png">
+<link rel="icon" type="image/x-icon" href="flavicon.png" />
 
 <style>
 @font-face {
@@ -28,17 +28,21 @@ body {
     height: 100vh;
     overflow: hidden;
     line-height: 1.3;
+    cursor: none;
+    user-select: none;
 }
 
 a {
     text-decoration: none;
     color: black;
     transition: color 0.4s ease;
+    cursor: none;
 }
 
 a:hover,
 .tab.active {
     color: #ff9900;
+    cursor: none;
 }
 
 .tabs {
@@ -62,7 +66,7 @@ a:hover,
     text-align: center;
     z-index: -1;
     top: 50%;
-    left: 50%;
+    left: 55%;
     transform: translate(-50%, -50%);
     height: 90%;
     pointer-events: none;
@@ -90,7 +94,6 @@ a:hover,
     display: none;
     gap: 12px;
     font-size: 2.4vh;
-    font-weight: bold;
     opacity: 1;
     z-index: 100;
     filter: invert(10);
@@ -98,7 +101,7 @@ a:hover,
 }
 
 .image-arrows span {
-    cursor: pointer;
+    cursor: none;
     user-select: none;
 }
 
@@ -108,9 +111,8 @@ a:hover,
 
 .image-caption {
     position: absolute;
-    max-width: 165px;
+    max-width: 250px;
     z-index: 10;
-    font-size: 1.4vh;
 }
 
 .bottom-links {
@@ -128,7 +130,12 @@ a:hover,
     background-color: #ff9900;
     color: white;
     transition: left 0.6s ease;
+    transform: translate(10px, -0%);
     z-index: 200;
+}
+
+#thirdContainer:hover {
+  cursor: black;
 }
 
 .third-container.active {
@@ -138,6 +145,7 @@ a:hover,
 body.third-active {
     margin-left: 25%;
 }
+
 
 body.third-active .image-box {
     filter: blur(30px);
@@ -174,15 +182,31 @@ body.third-active .image-box {
         margin-left: 70%;
     }
 }
+
+#customCursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 2px solid #ff9900;
+  box-shadow: 0 0 10px #ff9900, 0 0 20px #ff9900;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
 </style>
 </head>
 
 <body>
 
+<div id="customCursor"></div>
+
 <div class="left-container">
 
-    <a href="#" class="logo">✻ Zach Montgomery</a><br><br>
-
+    <a href="index.html" onclick="myFunction()" class="logo">✻ Zach Montgomery</a><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br>
     <div class="tabs">
         <a href="#" class="tab" data-link="https://www.are.na/zach-montgomery/editorial-nlc0okylaly">Editorial</a><br>
         <a href="#" class="tab" data-link="https://www.are.na/zach-montgomery/identity-px96ygpyvo8">Identity</a><br>
@@ -190,10 +214,10 @@ body.third-active .image-box {
         <a href="#" class="tab" data-link="https://www.are.na/zach-montgomery/teaching-shen3nx2bqy">Teaching</a><br>
     </div><br>
 
-    <div class="image-caption" id="imageCaption"></div>
+    <div class="image-caption" id="imageCaption">⁘<br>⁘<br>⁘<br>⁘</div>
 
     <div class="image-box" id="imageBox">
-        <img src="" id="imageElement">
+        <img src="" id="imageElement" />
     </div>
 
     <div class="image-arrows" id="imageArrows">
@@ -203,31 +227,61 @@ body.third-active .image-box {
 
     <div class="arena-counter" id="arenaCounter"></div>
 
-    <!-- ABOUT LINK — restored -->
     <div class="bottom-links">
         <a href="#" id="aboutLink">➝ About</a>
     </div>
 </div>
 
-<!-- ABOUT PANEL — restored verbatim -->
 <div class="third-container" id="thirdContainer">
     Zach is a multidisciplinary designer and student based in Richmond, VA.
     He is currently an Art Director at the
     <a href="https://commonwealthtimes.org/">Commonwealth Times</a>
     and a Studio Monitor + Instructor at
     <a href="https://www.studiotwothree.org/">Studio Two Three</a>
-    <br><br>
+    <br /><br />
     <p>
         Zach's practice specializes in editorial design and physical typographic printing.
         His recent work explores constraints, production, precedents, and translation. 
-    </p><br>
-    <a href="mailto:zm@zachmontgomery.us">zm@zachmontgomery.us</a><br><br>
-    <a href="ZM25Resume.pdf">↗ Resume</a><br>
-    <a href="https://www.linkedin.com/in/zach-montgomery-13b935235/">↗ LinkedIn</a><br>
+    </p><br />
+    <a href="mailto:zm@zachmontgomery.us">zm@zachmontgomery.us</a><br /><br />
+    <a href="ZM25Resume.pdf">↗ Resume</a><br />
+    <a href="https://www.linkedin.com/in/zach-montgomery-13b935235/">↗ LinkedIn</a><br />
     <a href="https://www.are.na/zach-montgomery">↗ Are.na</a>
 </div>
 
 <script>
+
+const customCursor = document.getElementById('customCursor');
+const thirdContainer = document.getElementById('thirdContainer');
+
+thirdContainer.addEventListener('mouseenter', () => {
+  customCursor.style.borderColor = 'black';
+  customCursor.style.boxShadow = '0 0 10px black, 0 0 20px black';
+});
+
+thirdContainer.addEventListener('mouseleave', () => {
+  customCursor.style.borderColor = '#ff9900';
+  customCursor.style.boxShadow = '0 0 10px #ff9900, 0 0 20px #ff9900';
+});
+
+const cursor = document.getElementById('customCursor');
+
+document.addEventListener('mousemove', e => {
+  cursor.style.top = e.clientY + 'px';
+  cursor.style.left = e.clientX + 'px';
+});
+
+document.addEventListener('mousedown', () => {
+  customCursor.style.backgroundColor = 'orange';
+});
+
+document.addEventListener('mouseup', () => {
+  customCursor.style.backgroundColor = ''; 
+});
+
+function myFunction() {
+  window.location.reload();
+}
 
 document.getElementById('aboutLink').addEventListener('click', e => {
     e.preventDefault();
@@ -258,12 +312,23 @@ const arenaBlocks = {
 const arenaState = {};
 
 function shuffleArray(arr) {
-    return arr.map(v => ({ v, s: Math.random() }))
-              .sort((a, b) => a.s - b.s)
-              .map(o => o.v);
+    return arr
+        .map(v => ({ v, s: Math.random() }))
+        .sort((a, b) => a.s - b.s)
+        .map(o => o.v);
 }
 
 async function fetchArenaBlock(id) {
+    for (const category in arenaBlocks) {
+        const block = arenaBlocks[category].find(b => b.id === id);
+        if (block) {
+            return {
+                title: block.title,
+                description: block.description,
+                image: block.image
+            };
+        }
+    }
     const res = await fetch(`https://api.are.na/v2/blocks/${id}`);
     const data = await res.json();
     return {
@@ -281,7 +346,8 @@ async function showNextArenaBlock(tabName, direction = 1) {
     if (state.index >= state.order.length) state.index = 0;
     if (state.index < 0) state.index = state.order.length - 1;
 
-    const block = await fetchArenaBlock(state.order[state.index]);
+    const blockId = state.order[state.index];
+    const block = await fetchArenaBlock(blockId);
     if (!block?.image) return;
 
     imageElement.src = block.image;
@@ -300,7 +366,7 @@ tabs.forEach(tab => {
         if (isMobile) {
             const link = tab.dataset.link;
             if (link) {
-                window.location.href = link; // 👈 allow visit on mobile
+                window.location.href = link;
             }
             return;
         }
@@ -313,12 +379,13 @@ tabs.forEach(tab => {
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
 
-        if (!arenaState[tabName]) {
-            arenaState[tabName] = {
-                order: shuffleArray(arenaBlocks[tabName]),
-                index: -1
-            };
-        }
+        
+if (!arenaState[tabName]) {
+  arenaState[tabName] = {
+    order: arenaBlocks[tabName].map(b => b.id),
+    index: -1
+  };
+}
 
         showNextArenaBlock(tabName, 1);
     });
@@ -328,7 +395,7 @@ window.addEventListener('wheel', e => {
     if (!activeTabName || isScrolling) return;
     isScrolling = true;
     showNextArenaBlock(activeTabName, e.deltaY > 0 ? 1 : -1);
-    setTimeout(() => isScrolling = false, 450);
+    setTimeout(() => (isScrolling = false), 450);
 });
 
 window.addEventListener('keydown', e => {
@@ -353,11 +420,38 @@ logo.addEventListener('click', e => {
     arenaCounter.style.display = 'none';
     activeTabName = null;
 });
-</script>
 
+async function loadAllArenaBlocks() {
+  const categories = Object.keys(arenaBlocks);
+  for (const category of categories) {
+    const storedData = localStorage.getItem(`arenaData_${category}`);
+    if (storedData) {
+      arenaBlocks[category] = JSON.parse(storedData);
+      continue;
+    }
+
+    const ids = arenaBlocks[category];
+    const blocks = [];
+    for (const id of ids) {
+      const blockData = await fetchArenaBlock(id);
+      blocks.push({ id, title: blockData.title, description: blockData.description, image: blockData.image });
+    }
+
+    localStorage.setItem(`arenaData_${category}`, JSON.stringify(blocks));
+    arenaBlocks[category] = blocks;
+  }
+
+for (const category of categories) {
+  arenaState[category] = {
+    order: arenaBlocks[category].map(b => b.id),
+    index: -1
+  };
+}
+}
+
+window.addEventListener('load', async () => {
+  await loadAllArenaBlocks();
+});
+</script>
 </body>
 </html>
-
-
-
-
