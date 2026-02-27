@@ -47,6 +47,7 @@ a:hover,
 
 .tabs {
     z-index: 100;
+    transform: translateY(30vh);
 }
 
 .left-container {
@@ -172,17 +173,60 @@ body.third-active .image-box {
 
 @media (max-width: 768px) {
     body { font-size: 1.75vh; }
-    .image-box,
-    .image-caption,
-    .image-arrows,
-    .arena-counter {
-        display: none !important;
+
+    .tabs {
+        transform: translateY(3vh);
     }
+
+    body.third-active {
+    margin-left: 70%;
+}
+
+body.third-active .image-arrows {
+    transform: translateX(100vh)
+}
+
+body.third-active .arena-counter {
+    transform: translateX(100vh)
+}
+
+body.third-active .image-box {
+    display: none !important;
+}
+
+body.third-active .image-caption {
+    display: none !important;
+}
+
+    .left-container {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        overflow-x: hidden;
+    }
+
     .third-container {
         width: 70%;
     }
-    body.third-active {
-        margin-left: 70%;
+
+    .image-caption {
+        width: 100%;
+    }
+
+    .image-box {
+        display: block; 
+        max-width: 90%;
+        margin-top: 10px;
+        position: static;
+        transform: translateY(8vh);
+    }
+
+    #imageElement {
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        display: block;
+        max-height: 50vh;
     }
 }
 
@@ -213,16 +257,15 @@ body.third-active .image-box {
 
 <div class="left-container">
 
-    <a href="index.html" onclick="myFunction()" class="logo">✻ Zach Montgomery</a><br><br>
-    <br><br><br><br><br><br><br><br><br><br><br>
+    <a href="index.html" onclick="myFunction()" class="logo">✻ Zach Montgomery</a>
     <div class="tabs">
         <a href="#" class="tab" data-link="https://www.are.na/zach-montgomery/editorial-nlc0okylaly">Editorial</a><br>
         <a href="#" class="tab" data-link="https://www.are.na/zach-montgomery/identity-px96ygpyvo8">Identity</a><br>
         <a href="#" class="tab" data-link="https://www.are.na/zach-montgomery/production-il7gunqgnry">Production</a><br>
         <a href="#" class="tab" data-link="https://www.are.na/zach-montgomery/teaching-shen3nx2bqy">Teaching</a><br>
+        <br><div class="image-caption" id="imageCaption">⁘<br>⁘<br>⁘<br>⁘</div>
     </div><br>
 
-    <div class="image-caption" id="imageCaption">⁘<br>⁘<br>⁘<br>⁘</div>
 
     <div class="image-box" id="imageBox">
         <img src="" id="imageElement" />
@@ -358,16 +401,19 @@ async function showNextArenaBlock(tabName, direction = 1) {
     const block = await fetchArenaBlock(blockId);
     if (!block?.image) return;
 
-    // Fade out
-    imageElement.style.opacity = 0;
-    // Wait for the fade out to complete
-    setTimeout(() => {
-        // Change the image source
-        imageElement.src = block.image;
-        // Fade in
+    const handleImageLoad = () => {
+
         imageElement.style.opacity = 1;
-    }, 600); // match the CSS transition duration
-    // Update caption, counter, etc. as needed
+
+        imageElement.removeEventListener('load', handleImageLoad);
+    };
+
+    imageElement.addEventListener('load', handleImageLoad);
+
+    imageElement.style.opacity = 0;
+
+    imageElement.src = block.image;
+
     imageCaption.textContent = [block.title, block.description].filter(Boolean).join(' — ');
     imageBox.style.display = 'block';
     imageArrows.style.display = 'flex';
@@ -378,15 +424,6 @@ async function showNextArenaBlock(tabName, direction = 1) {
 
 tabs.forEach(tab => {
     tab.addEventListener('click', e => {
-        const isMobile = window.innerWidth <= 768;
-
-        if (isMobile) {
-            const link = tab.dataset.link;
-            if (link) {
-                window.location.href = link;
-            }
-            return;
-        }
 
         e.preventDefault();
 
