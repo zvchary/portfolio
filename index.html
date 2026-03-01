@@ -367,7 +367,7 @@ let isScrolling = false;
 
 const arenaBlocks = {
     Editorial: [42542131, 42525196, 42539991, 42542530],
-    Identity: [42535318, 42689521, 42542203, 42537124, 43999400, 42542332],
+    Identity: [42535318, 42689521, 42542203, 42537124, 42542332],
     Production: [41830306, 41830301, 42565108, 41038168, 41038092, 41037976, 42535514, 36813107, 42542580, 42560386, 42590569],
     Teaching: [42525144, 42535397, 42535396, 42535395, 42565146, 43405938]
 };
@@ -487,32 +487,50 @@ logo.addEventListener('click', e => {
     activeTabName = null;
 });
 
+const refreshIntervalHours = 24; // Set refresh interval in hours
+
 async function loadAllArenaBlocks() {
   const categories = Object.keys(arenaBlocks);
+  const now = Date.now();
+
   for (const category of categories) {
-    const storedData = localStorage.getItem(`arenaData_${category}`);
-    if (storedData) {
-      arenaBlocks[category] = JSON.parse(storedData);
-      continue;
+    const storedMeta = localStorage.getItem(`arenaDataMeta_${category}`);
+    let shouldRefresh = true;
+
+    if (storedMeta) {
+      const meta = JSON.parse(storedMeta);
+      const lastUpdate = meta.timestamp;
+      const hoursSinceUpdate = (now - lastUpdate) / (1000 * 60 * 60);
+      if (hoursSinceUpdate < refreshIntervalHours) {
+        // Use cached data if within refresh interval
+        const storedData = localStorage.getItem(`arenaData_${category}`);
+        if (storedData) {
+          arenaBlocks[category] = JSON.parse(storedData);
+          shouldRefresh = false;
+        }
+      }
     }
 
-    const ids = arenaBlocks[category];
-    const blocks = [];
-    for (const id of ids) {
-      const blockData = await fetchArenaBlock(id);
-      blocks.push({ id, title: blockData.title, description: blockData.description, image: blockData.image });
+    if (shouldRefresh) {
+      const ids = arenaBlocks[category];
+      const blocks = [];
+      for (const id of ids) {
+        const blockData = await fetchArenaBlock(id);
+        blocks.push({ id, title: blockData.title, description: blockData.description, image: blockData.image });
+      }
+      // Save new data and update timestamp
+      localStorage.setItem(`arenaData_${category}`, JSON.stringify(blocks));
+      localStorage.setItem(`arenaDataMeta_${category}`, JSON.stringify({ timestamp: now }));
+      arenaBlocks[category] = blocks;
     }
-
-    localStorage.setItem(`arenaData_${category}`, JSON.stringify(blocks));
-    arenaBlocks[category] = blocks;
   }
 
-for (const category of categories) {
-  arenaState[category] = {
-    order: arenaBlocks[category].map(b => b.id),
-    index: -1
-  };
-}
+  for (const category of categories) {
+    arenaState[category] = {
+      order: arenaBlocks[category].map(b => b.id),
+      index: -1
+    };
+  }
 }
 
 window.addEventListener('load', async () => {
@@ -521,6 +539,7 @@ window.addEventListener('load', async () => {
 </script>
 </body>
 </html>
+
 
 
 
