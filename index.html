@@ -186,17 +186,19 @@ body.third-active .image-box {
 
 @media (max-width: 768px) {
     body { font-size: 2vh; 
-         height: 100vh;}
+         height: 100vh;
+         overflow-y: scroll;}
 
     .tabs {
         transform: translateY(3vh);
     }
 
-    body.third-active {
-    margin-left: 25%; }
+    .third-container.active {
+        width: 65%;
+    }
 
-    .bottom-links {
-    bottom:70px; }
+    body.third-active {
+    margin-left: 65%;}
         
 }
 
@@ -255,8 +257,6 @@ body.third-active .tabs {
     .image-arrows {
         font-size:3vh;
     }
-
-}
 
 #imageElement {
   transition: opacity 1s ease-in-out;
@@ -556,7 +556,6 @@ window.addEventListener('load', async () => {
 </script>
 </body>
 </html>
-
 
 
 
