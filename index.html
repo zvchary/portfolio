@@ -11,7 +11,7 @@
     font-family: 'Franklin Gothic Book';
     src: url('./franklin-gothic-book.ttf') format('truetype'),
     url('./franklin-gothic-book.woff2') format('woff2'),
-    url('./franklin-gothic-book.woff') format('woff');;
+    url('./franklin-gothic-book.woff') format('woff');
 }
 
 @font-face {
@@ -52,13 +52,6 @@ a:hover,
 
 .tabs {
     z-index: 100;
-    transform: translateY(30vh);
-}
-
-.tab {
-    border: solid 1px #ff9900;
-    line-height: 3vh;
-    display:none;
 }
 
 .left-container {
@@ -66,6 +59,7 @@ a:hover,
     width: 100%;
     height: 100vh;
     position: relative;
+    flex-direction: row;
     z-index: 0;
     background: white;
     border-left: 10px solid #ff9900;
@@ -73,60 +67,196 @@ a:hover,
     user-select: none;
 }
 
-.image-box {
-    display: none;
+.left-preview {
     position: absolute;
-    text-align: center;
-    z-index: -1;
     top: 50%;
-    left: 55%;
+    left: 50%;
     transform: translate(-50%, -50%);
-    height: 90%;
+    object-fit: cover;
+    width: calc(100% - 72px);
+    height: auto;
+    opacity: 0;
+    transition: opacity 0.25s ease;
     pointer-events: none;
 }
 
-.image-box img {
-    height: 100%;
-    width: auto;
-}
-
-.arena-counter {
-    position: absolute;
-    bottom: 36px;
-    right: 36px;
-    font-size: 1.4vh;
-    opacity: 0.45;
-    display: none;
-    pointer-events: none;
-}
-
-.image-arrows {
-    position: absolute;
-    bottom: 31.5px;
-    right: 72px;
-    display: none;
-    gap: 12px;
-    font-size: 2.4vh;
+.left-preview.active {
     opacity: 1;
-    z-index: 100;
-    filter: invert(10);
-    mix-blend-mode: difference;
 }
 
-.image-arrows span {
-    cursor: none;
+.right-container {
+    padding: 36px;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    z-index: 0;
+    background: white;
     user-select: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
 }
 
-.image-arrows span:hover {
+.works-toggle {
+    border: none;
+    background: transparent;
+    font: inherit;
+    color: black;
+    padding: 0;
+    cursor: none;
+}
+
+.works-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 12px;
+}
+
+.works-toggle.active {
+    color: #ff9900;
+}
+
+.works-panel {
+    width: 100vh;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.35s ease, opacity 0.35s ease;
+}
+
+.works-panel.open {
+    max-height: 100vh;
     opacity: 1;
+    overflow-y: auto;
 }
 
-.image-caption {
-    position: absolute;
-    max-width: 250px;
-    z-index: 10;
-    mix-blend-mode:difference;
+.works-view-toggle {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+    justify-content: flex-end;
+}
+
+.works-view-toggle button {
+    border: none;
+    background: transparent;
+    font: inherit;
+    color: black;
+    padding: 0;
+    cursor: none;
+}
+
+.works-view-toggle button.active {
+    color: #ff9900;
+}
+
+.works-filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.works-filters button {
+    border: none;
+    background: transparent;
+    font: inherit;
+    color: black;
+    padding: 0;
+    cursor: none;
+}
+
+.works-filters button.active {
+    color: #ff9900;
+}
+
+.works-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.work-summary {
+    width: 100%;
+    text-align: left;
+    border: none;
+    background: transparent;
+    padding: 12px 0;
+    font: inherit;
+    color: black;
+    cursor: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.work-summary:hover {
+    color: #ff9900;
+}
+
+.work-details {
+    display: none;
+    padding: 0 0 14px;
+}
+
+.work-item {
+    border-bottom: 1px solid #000000;
+}
+
+.work-grid {
+    column-count: 3;
+    column-gap: 10px;
+}
+
+.work-card {
+    display: inline-block;
+    width: 100%;
+    margin: 0 0 10px;
+}
+
+.work-card img {
+    width: 100%;
+    height: 15vh;
+    object-fit: cover;
+    display: block;
+}
+
+.work-card h3 {
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+}
+
+.work-card p {
+    font-size: 0.85rem;
+}
+
+.work-item.open .work-details {
+    display: block;
+}
+
+.work-details img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    margin-top: 10px;
+    display: block;
+}
+
+.work-details p {
+    margin-top: 8px;
+    font-size: 0.92rem;
+}
+
+.work-details a {
+    color: #ff9900;
+    text-decoration: underline;
+    display: inline-block;
+    margin-top: 8px;
 }
 
 .bottom-links {
@@ -143,7 +273,9 @@ a:hover,
     height: 100vh;
     background-color: #ff9900;
     color: white;
-    transition: left 0.6s ease;
+    opacity: 0.96;
+    transform: translateX(-8px);
+    transition: left 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease;
     z-index: 200;
 }
 
@@ -153,14 +285,22 @@ a:hover,
 
 .third-container.active {
     left: 0;
+    transform: translateX(0);
+    opacity: 1;
 }
 
 body.third-active .left-container {
     border-left: none;
 }
 
+body.third-active #leftPreview {
+    opacity: 0 !important;
+    pointer-events: none;
+}
+
 body.third-active {
     margin-left: 25%;
+    transition: margin-left 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 
@@ -189,10 +329,6 @@ body.third-active .image-box {
          height: 100vh;
          overflow-y: scroll;}
 
-    .tabs {
-        transform: translateY(3vh);
-    }
-
     .third-container.active {
         width: 65%;
     }
@@ -202,61 +338,6 @@ body.third-active .image-box {
         
 }
 
-body.third-active .image-arrows {
-    transform: translateX(100vh)
-}
-
-body.third-active .arena-counter {
-    transform: translateX(100vh)
-}
-
-body.third-active .image-box {
-    display: none !important;
-}
-
-body.third-active .image-caption {
-    display: none !important;
-}
-
-body.third-active .tabs {
-    display: none !important;
-}
-
-    .left-container {
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        overflow-x: hidden;
-    }
-
-    .third-container {
-        width: 25%;
-    }
-
-    .image-caption {
-        min-width: 50vh;
-        max-width: 65vh;
-    }
-
-    .image-box {
-        display: block; 
-        max-width: 90%;
-        margin-top: 10px;
-        position: static;
-        transform: translateY(8vh);
-    }
-
-    #imageElement {
-        width: auto;
-        max-width: 100%;
-        height: auto;
-        display: block;
-        max-height: 50vh;
-    }
-
-    .image-arrows {
-        font-size:3vh;
-    }
 
 #imageElement {
   transition: opacity 1s ease-in-out;
@@ -284,30 +365,26 @@ body.third-active .tabs {
 <div id="customCursor"></div>
 
 <div class="left-container">
+    <img id="leftPreview" class="left-preview" alt="Project preview" />
 
     <a href="index.html" onclick="myFunction()" class="logo">✻ Zach Montgomery</a>
-    <div class="tabs">
-        <a href="#" class="tab" data-link="https://www.are.na/zach-montgomery/editorial-nlc0okylaly">&thinsp;Editorial&thinsp;</a><br>
-        <a href="#" class="tab" data-link="https://www.are.na/zach-montgomery/identity-px96ygpyvo8">&thinsp;Identity&thinsp;</a><br>
-        <a href="#" class="tab" data-link="https://www.are.na/zach-montgomery/production-il7gunqgnry">&thinsp;Production&thinsp;</a><br>
-        <a href="#" class="tab" data-link="https://www.are.na/zach-montgomery/teaching-shen3nx2bqy">&thinsp;Teaching&thinsp;&hairsp;</a><br>
-        <br><div class="image-caption" id="imageCaption"></div><br>
-    </div>
-
-
-    <div class="image-box" id="imageBox">
-        <img src="" id="imageElement" />
-    </div>
-
-    <div class="image-arrows" id="imageArrows">
-        <span id="prevArrow">&lt;</span>
-        <span id="nextArrow">&gt;</span>
-    </div>
-
-    <div class="arena-counter" id="arenaCounter"></div>
 
     <div class="bottom-links">
         <a href="#" id="aboutLink">➝ About</a>
+    </div>
+</div>
+
+<div class="right-container">
+    <div class="works-header">
+        <button class="works-toggle" id="worksToggle" type="button">Works</button>
+        <div class="works-view-toggle" id="worksViewToggle">
+            <button type="button" class="active" data-view="list">≡</button>
+            <button type="button" data-view="gallery">❏</button>
+        </div>
+    </div>
+    <div class="works-panel" id="worksPanel">
+        <div class="works-filters" id="worksFilters"></div>
+        <div class="works-list" id="worksList"></div>
     </div>
 </div>
 
@@ -333,6 +410,253 @@ body.third-active .tabs {
 
 const customCursor = document.getElementById('customCursor');
 const thirdContainer = document.getElementById('thirdContainer');
+const leftPreview = document.getElementById('leftPreview');
+const worksToggle = document.getElementById('worksToggle');
+const worksPanel = document.getElementById('worksPanel');
+const worksList = document.getElementById('worksList');
+const worksViewToggle = document.getElementById('worksViewToggle');
+const worksFilters = document.getElementById('worksFilters');
+let currentView = 'list';
+let currentFilter = 'All';
+let worksData = [];
+
+const rawSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQSWN6ldsUnLW4ZExFG7E5F2A9aK_SPH_9Mba6lmdpg7P3z4V3PJxXYG5FZzmUnXZJV7H6e1cbgu_qy/pubhtml';
+const sheetCsvUrl = rawSheetUrl.includes('/pubhtml')
+  ? rawSheetUrl.replace('/pubhtml', '/pub?output=csv')
+  : rawSheetUrl;
+
+function getFreshSheetUrl() {
+  const separator = sheetCsvUrl.includes('?') ? '&' : '?';
+  return `${sheetCsvUrl}${separator}t=${Date.now()}`;
+}
+
+function parseCsv(text) {
+  const rows = [];
+  let row = [];
+  let cell = '';
+  let inQuotes = false;
+
+  for (let i = 0; i < text.length; i += 1) {
+    const char = text[i];
+
+    if (char === '"') {
+      if (inQuotes && text[i + 1] === '"') {
+        cell += '"';
+        i += 1;
+      } else {
+        inQuotes = !inQuotes;
+      }
+    } else if (char === ',' && !inQuotes) {
+      row.push(cell);
+      cell = '';
+    } else if ((char === '\n' || char === '\r') && !inQuotes) {
+      if (char === '\r' && text[i + 1] === '\n') {
+        i += 1;
+      }
+      row.push(cell);
+      if (row.some(value => value.trim())) {
+        rows.push(row);
+      }
+      row = [];
+      cell = '';
+    } else {
+      cell += char;
+    }
+  }
+
+  if (cell || row.length) {
+    row.push(cell);
+    if (row.some(value => value.trim())) {
+      rows.push(row);
+    }
+  }
+
+  if (!rows.length) {
+    return [];
+  }
+
+  const headers = rows[0].map(header => header.trim().toLowerCase());
+  return rows.slice(1).filter(values => values.some(value => value.trim())).map(values => {
+    const item = {};
+    headers.forEach((header, index) => {
+      item[header] = (values[index] || '').trim();
+    });
+    return item;
+  });
+}
+
+function getTagValue(work) {
+  return (work.tags || work.tag || '').toLowerCase();
+}
+
+function getFilteredWorks(items) {
+  if (currentFilter === 'All') {
+    return items;
+  }
+
+  return items.filter((work) => getTagValue(work).includes(currentFilter));
+}
+
+function renderFilterButtons(items) {
+  const tags = ['All', 'Editorial', 'Production', 'Identity', 'Teaching'];
+  worksFilters.innerHTML = '';
+
+  tags.forEach((tag) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = tag === 'All' ? 'All' : tag;
+    button.className = currentFilter === tag ? 'active' : '';
+    button.addEventListener('click', () => {
+      currentFilter = tag;
+      renderFilterButtons(items);
+      renderWorks(items);
+    });
+    worksFilters.appendChild(button);
+  });
+}
+
+function renderWorks(items) {
+  worksData = items;
+  worksList.innerHTML = '';
+
+  const filteredItems = getFilteredWorks(items);
+
+  if (!filteredItems.length) {
+    worksList.innerHTML = '<p>No works available yet.</p>';
+    return;
+  }
+
+  if (currentView === 'gallery') {
+    const grid = document.createElement('div');
+    grid.className = 'work-grid';
+
+    filteredItems.forEach((work) => {
+      const imageValue = work.image || work.photo || work.img || '';
+      const imageUrls = imageValue
+        .split(/\n|;/)
+        .map((value) => value.trim())
+        .filter(Boolean);
+
+      imageUrls.forEach((imageUrl) => {
+        const card = document.createElement('div');
+        card.className = 'work-card';
+
+        const image = document.createElement('img');
+        image.src = imageUrl;
+        image.alt = work.title || work.name || 'Work image';
+        card.appendChild(image);
+
+        grid.appendChild(card);
+      });
+    });
+
+    worksList.appendChild(grid);
+    return;
+  }
+
+  filteredItems.forEach((work) => {
+    const item = document.createElement('div');
+    item.className = 'work-item';
+
+    const summary = document.createElement('button');
+    summary.className = 'work-summary';
+    summary.type = 'button';
+    summary.innerHTML = `<span>${work.title || work.name || 'Untitled work'}</span><span>+</span>`;
+
+    const details = document.createElement('div');
+    details.className = 'work-details';
+
+    if (work.description || work.desc || work.text) {
+      const description = document.createElement('p');
+      description.textContent = work.description || work.desc || work.text;
+      details.appendChild(description);
+    }
+
+    if (work.image || work.photo || work.img) {
+      const image = document.createElement('img');
+      image.src = work.image || work.photo || work.img;
+      image.alt = work.title || work.name || 'Work image';
+      details.appendChild(image);
+    }
+
+    summary.addEventListener('click', () => {
+      const isOpen = item.classList.toggle('open');
+      const icon = summary.querySelector('span:last-child');
+      icon.textContent = isOpen ? '–' : '+';
+
+      if (isOpen) {
+        Array.from(worksList.children).forEach((otherItem) => {
+          if (otherItem !== item) {
+            otherItem.classList.remove('open');
+            otherItem.querySelector('.work-summary span:last-child').textContent = '+';
+          }
+        });
+      }
+    });
+
+    summary.addEventListener('mouseenter', () => {
+      const previewImage = work.image || work.photo || work.img;
+      if (previewImage) {
+        leftPreview.src = previewImage;
+        leftPreview.classList.add('active');
+      }
+    });
+
+    summary.addEventListener('mouseleave', () => {
+      leftPreview.classList.remove('active');
+      leftPreview.removeAttribute('src');
+    });
+
+    item.appendChild(summary);
+    item.appendChild(details);
+    worksList.appendChild(item);
+  });
+}
+
+async function loadWorks() {
+  if (!sheetCsvUrl || sheetCsvUrl.includes('YOUR_SHEET_ID')) {
+    worksList.innerHTML = '<p>Replace the Google Sheet URL in the page script.</p>';
+    return;
+  }
+
+  try {
+    const response = await fetch(getFreshSheetUrl(), { mode: 'cors', cache: 'no-store' });
+    if (!response.ok) {
+      throw new Error('Sheet could not be loaded');
+    }
+
+    const csvText = await response.text();
+    const data = parseCsv(csvText);
+    renderFilterButtons(data);
+    renderWorks(data);
+  } catch (error) {
+    console.error(error);
+    worksList.innerHTML = '<p>Unable to load works from the Google Sheet.</p>';
+  }
+}
+
+worksToggle.addEventListener('click', () => {
+  const isOpen = worksPanel.classList.toggle('open');
+  worksToggle.classList.toggle('active', isOpen);
+
+  if (isOpen) {
+    loadWorks();
+  }
+});
+
+worksViewToggle.querySelectorAll('button').forEach((button) => {
+  button.addEventListener('click', () => {
+    currentView = button.dataset.view;
+    worksViewToggle.querySelectorAll('button').forEach((btn) => btn.classList.toggle('active', btn === button));
+    renderWorks(worksData);
+  });
+});
+
+setInterval(() => {
+  if (worksPanel.classList.contains('open')) {
+    loadWorks();
+  }
+}, 15000);
 
 thirdContainer.addEventListener('mouseenter', () => {
   customCursor.style.borderColor = 'black';
@@ -369,190 +693,6 @@ document.getElementById('aboutLink').addEventListener('click', e => {
     document.body.classList.toggle('third-active');
 });
 
-const tabs = document.querySelectorAll('.tab');
-const imageBox = document.getElementById('imageBox');
-const imageElement = document.getElementById('imageElement');
-const imageCaption = document.getElementById('imageCaption');
-const arenaCounter = document.getElementById('arenaCounter');
-const imageArrows = document.getElementById('imageArrows');
-const prevArrow = document.getElementById('prevArrow');
-const nextArrow = document.getElementById('nextArrow');
-const logo = document.querySelector('.logo');
-
-let activeTabName = null;
-let isScrolling = false;
-
-const arenaBlocks = {
-    Editorial: [42539991, 42542131, 42525196, 42542530],
-    Identity: [42535318, 42689521, 42542203, 42537124, 42542332],
-    Production: [41830306, 41830301, 42565108, 44788862, 41038168, 41038092, 41037976, 42535514, 36813107, 42542580, 42560386, 42590569],
-    Teaching: [42525144, 42535397, 42535396, 42535395, 42565146, 43405938]
-};
-
-const arenaState = {};
-
-function shuffleArray(arr) {
-    return arr
-        .map(v => ({ v, s: Math.random() }))
-        .sort((a, b) => a.s - b.s)
-        .map(o => o.v);
-}
-
-async function fetchArenaBlock(id) {
-    for (const category in arenaBlocks) {
-        const block = arenaBlocks[category].find(b => b.id === id);
-        if (block) {
-            return {
-                title: block.title,
-                description: block.description,
-                image: block.image
-            };
-        }
-    }
-    const res = await fetch(`https://api.are.na/v2/blocks/${id}`);
-    const data = await res.json();
-    return {
-        title: data.title,
-        description: data.description,
-        image: data.image?.original?.url
-    };
-}
-
-async function showNextArenaBlock(tabName, direction = 1) {
-    const state = arenaState[tabName];
-    if (!state) return;
-
-    state.index += direction;
-    if (state.index >= state.order.length) state.index = 0;
-    if (state.index < 0) state.index = state.order.length - 1;
-
-    const blockId = state.order[state.index];
-    const block = await fetchArenaBlock(blockId);
-    if (!block?.image) return;
-
-    const handleImageLoad = () => {
-
-        imageElement.style.opacity = 1;
-
-        imageElement.removeEventListener('load', handleImageLoad);
-    };
-
-    imageElement.addEventListener('load', handleImageLoad);
-
-    imageElement.style.opacity = 0;
-
-    imageElement.src = block.image;
-
-    imageCaption.textContent = [block.title, block.description].filter(Boolean).join(' — ');
-    imageBox.style.display = 'block';
-    imageArrows.style.display = 'flex';
-
-    arenaCounter.textContent = `${state.index + 1} / ${state.order.length}`;
-    arenaCounter.style.display = 'block';
-}
-
-tabs.forEach(tab => {
-    tab.addEventListener('click', e => {
-
-        e.preventDefault();
-
-        const tabName = tab.textContent.trim();
-        activeTabName = tabName;
-
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-
-        
-if (!arenaState[tabName]) {
-  arenaState[tabName] = {
-    order: arenaBlocks[tabName].map(b => b.id),
-    index: -1
-  };
-}
-
-        showNextArenaBlock(tabName, 1);
-    });
-});
-
-window.addEventListener('wheel', e => {
-    if (!activeTabName || isScrolling) return;
-    isScrolling = true;
-    showNextArenaBlock(activeTabName, e.deltaY > 0 ? 1 : -1);
-    setTimeout(() => (isScrolling = false), 450);
-});
-
-window.addEventListener('keydown', e => {
-    if (!activeTabName) return;
-    if (e.key === 'ArrowRight') showNextArenaBlock(activeTabName, 1);
-    if (e.key === 'ArrowLeft') showNextArenaBlock(activeTabName, -1);
-});
-
-nextArrow.addEventListener('click', () => {
-    if (activeTabName) showNextArenaBlock(activeTabName, 1);
-});
-
-prevArrow.addEventListener('click', () => {
-    if (activeTabName) showNextArenaBlock(activeTabName, -1);
-});
-
-logo.addEventListener('click', e => {
-    e.preventDefault();
-    tabs.forEach(t => t.classList.remove('active'));
-    imageBox.style.display = 'none';
-    imageArrows.style.display = 'none';
-    arenaCounter.style.display = 'none';
-    activeTabName = null;
-});
-
-const refreshIntervalHours = 24; // Set refresh interval in hours
-
-async function loadAllArenaBlocks() {
-  const categories = Object.keys(arenaBlocks);
-  const now = Date.now();
-
-  for (const category of categories) {
-    const storedMeta = localStorage.getItem(`arenaDataMeta_${category}`);
-    let shouldRefresh = true;
-
-    if (storedMeta) {
-      const meta = JSON.parse(storedMeta);
-      const lastUpdate = meta.timestamp;
-      const hoursSinceUpdate = (now - lastUpdate) / (1000 * 60 * 60);
-      if (hoursSinceUpdate < refreshIntervalHours) {
-        // Use cached data if within refresh interval
-        const storedData = localStorage.getItem(`arenaData_${category}`);
-        if (storedData) {
-          arenaBlocks[category] = JSON.parse(storedData);
-          shouldRefresh = false;
-        }
-      }
-    }
-
-    if (shouldRefresh) {
-      const ids = arenaBlocks[category];
-      const blocks = [];
-      for (const id of ids) {
-        const blockData = await fetchArenaBlock(id);
-        blocks.push({ id, title: blockData.title, description: blockData.description, image: blockData.image });
-      }
-      // Save new data and update timestamp
-      localStorage.setItem(`arenaData_${category}`, JSON.stringify(blocks));
-      localStorage.setItem(`arenaDataMeta_${category}`, JSON.stringify({ timestamp: now }));
-      arenaBlocks[category] = blocks;
-    }
-  }
-
-  for (const category of categories) {
-    arenaState[category] = {
-      order: arenaBlocks[category].map(b => b.id),
-      index: -1
-    };
-  }
-}
-
-window.addEventListener('load', async () => {
-  await loadAllArenaBlocks();
-});
 </script>
 </body>
 </html>
