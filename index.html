@@ -31,7 +31,8 @@ body {
     font-size: 1.9vh;
     background-color: #ff9900;
     display: flex;
-    height: 100vh;
+    min-height: 100dvh;
+    height: 100dvh;
     overflow: hidden;
     line-height: 1.3;
     cursor: none;
@@ -57,9 +58,12 @@ a:hover,
 .left-container {
     padding: 36px;
     width: 100%;
-    height: 100vh;
+    height: 100dvh;
+    min-height: 100dvh;
     position: relative;
-    flex-direction: row;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     z-index: 0;
     background: white;
     border-left: 10px solid #ff9900;
@@ -67,32 +71,71 @@ a:hover,
     user-select: none;
 }
 
-.left-preview {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    object-fit: cover;
-    width: calc(100% - 72px);
-    height: auto;
-    opacity: 0;
-    transition: opacity 0.25s ease;
-    pointer-events: none;
+.title-stack {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    width: 100%;
 }
 
-.left-preview.active {
-    opacity: 1;
+.left-project-carousel {
+    position: absolute;
+    top: 50%;
+    left: 36px;
+    right: 36px;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 8px;
+    scroll-snap-type: x proximity;
+    scrollbar-width: thin;
+    z-index: 2;
+    pointer-events: auto;
+}
+
+.left-project-carousel::after {
+    content: "";
+    flex: 0 0 calc(50vw + 36px); /* width of the Work panel + container padding */
+}
+
+.left-project-carousel:empty {
+    display: none;
+}
+
+.left-project-carousel img {
+    flex: 0 0 auto;
+    height: auto;
+    max-height: 570px;
+    width: auto;
+    max-width: min(70vw, 708px);
+    object-fit: cover;
+    align-self: flex-end;
+    scroll-snap-align: start;
+    opacity: 0;
+    animation: fadeInImage 0.35s ease forwards;
+}
+
+@keyframes fadeInImage {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .right-container {
-    padding: 36px;
-    width: 100%;
-    height: 100vh;
+    width: 50%;
+    height: auto;
+    min-height: 0;
+    padding-left:36px;
+    padding-bottom:36px;
     position: relative;
-    z-index: 0;
-    background: white;
+    z-index: 5;
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     user-select: none;
-    display: none;
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 18px;
@@ -107,20 +150,12 @@ a:hover,
     cursor: none;
 }
 
-.works-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    gap: 12px;
-}
-
 .works-toggle.active {
     color: #ff9900;
 }
 
 .works-panel {
-    width: 100vh;
+    width: 100%;
     max-height: 0;
     overflow: hidden;
     opacity: 0;
@@ -131,26 +166,6 @@ a:hover,
     max-height: 100vh;
     opacity: 1;
     overflow-y: auto;
-}
-
-.works-view-toggle {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 8px;
-    justify-content: flex-end;
-}
-
-.works-view-toggle button {
-    border: none;
-    background: transparent;
-    font: inherit;
-    color: black;
-    padding: 0;
-    cursor: none;
-}
-
-.works-view-toggle button.active {
-    color: #ff9900;
 }
 
 .works-filters {
@@ -171,14 +186,17 @@ a:hover,
 
 .works-filters button.active {
     color: #ff9900;
+    text-decoration: underline;
 }
 
 .works-list {
     display: flex;
     flex-direction: column;
-    width: 100%;
     padding: 0;
-    margin: 0;
+    overflow: visible;
+    padding-bottom: 36px;
+    -webkit-overflow-scrolling: touch;
+    max-height: calc(100dvh - 136px);
 }
 
 .work-summary {
@@ -193,6 +211,17 @@ a:hover,
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 12px;
+}
+
+.work-summary .work-title {
+    flex: 1;
+    text-align: left;
+}
+
+.work-summary .work-toggle-icon {
+    flex-shrink: 0;
+    font-size: 0.95em;
 }
 
 .work-summary:hover {
@@ -201,38 +230,25 @@ a:hover,
 
 .work-details {
     display: none;
-    padding: 0 0 14px;
+    padding: 0 14px 14px;
 }
 
 .work-item {
     border-bottom: 1px solid #000000;
+    transition: opacity 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
-.work-grid {
-    column-count: 3;
-    column-gap: 10px;
+.work-item.open {
+    border-bottom-color: #000000;
 }
 
-.work-card {
-    display: inline-block;
-    width: 100%;
-    margin: 0 0 10px;
+.work-item.dimmed {
+    opacity: 0.45;
+    border-bottom-color: #9a9a9a;
 }
 
-.work-card img {
-    width: 100%;
-    height: 15vh;
-    object-fit: cover;
-    display: block;
-}
-
-.work-card h3 {
-    font-size: 0.95rem;
-    margin-bottom: 4px;
-}
-
-.work-card p {
-    font-size: 0.85rem;
+.work-item.dimmed .work-summary {
+    color: #7a7a7a;
 }
 
 .work-item.open .work-details {
@@ -293,11 +309,6 @@ body.third-active .left-container {
     border-left: none;
 }
 
-body.third-active #leftPreview {
-    opacity: 0 !important;
-    pointer-events: none;
-}
-
 body.third-active {
     margin-left: 25%;
     transition: margin-left 0.7s cubic-bezier(0.22, 1, 0.36, 1);
@@ -324,18 +335,142 @@ body.third-active .image-box {
     color: black;
 }
 
+.third-close {
+    display: none;
+    text-decoration: none;
+}
+
 @media (max-width: 768px) {
-    body { font-size: 2vh; 
-         height: 100vh;
-         overflow-y: scroll;}
+    body {
+        font-size: 2vh;
+        height: 100dvh;
+        min-height: 100dvh;
+        overflow: hidden;
+        flex-direction: column;
+    }
+
+    .left-container {
+        width: 100%;
+        height: 100dvh;
+        min-height: 100dvh;
+        padding: 36px;
+        border-left: 0;
+        border-bottom: 10px solid #ff9900;
+        justify-content: flex-start;
+        gap: 16px;
+    }
+
+       .title-stack {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+
+    .right-container {
+        width: auto;
+        padding: 0;
+        background: transparent;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        gap: 0;
+        align-items: flex-end;
+    flex: 0 0 auto;
+    }
+
+    .left-project-carousel {
+        display: none;
+    }
+
+    .works-panel {
+        width: min(320px, 90vw);
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: max-height 0.35s ease, opacity 0.35s ease;
+    }
+
+    .works-panel.open {
+        max-height: calc(100dvh - 140px);
+        opacity: 1;
+        overflow: hidden;
+    }
+
+    .works-list {
+        width: 100%;
+        max-height: calc(100dvh - 180px);
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .work-summary {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 10px 0;
+    }
+
+    .work-summary .work-title {
+        flex: 1;
+    }
+
+    .work-summary .work-toggle-icon {
+        flex-shrink: 0;
+    }
+
+    .work-details {
+        padding: 0 0 12px;
+    }
+
+    .work-details img {
+        width: 100%;
+        height: auto;
+        max-height: 220px;
+        object-fit: cover;
+        margin-top: 8px;
+    }
+
+    .bottom-links {
+        position: static;
+        margin-top: auto;
+        padding-top: 8px;
+    }
+
+    .third-container {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    height: 100dvh;
+    }
+
+    .third-close {
+        display: block;
+        margin-top: auto;
+        padding-top: 32px;
+        padding-bottom: 10px;
+    }
+
+    .third-close a {
+        color: white;
+    }
+
+    .third-close a:hover {
+        color: black;
+    }
 
     .third-container.active {
-        width: 65%;
+        width: 100%;
+        z-index:500;
+    }
+
+    .third-container.active, .bottom-links {
+        z-index:550;
     }
 
     body.third-active {
-    margin-left: 65%;}
-        
+        margin-left: 0;
+    }
 }
 
 
@@ -365,58 +500,64 @@ body.third-active .image-box {
 <div id="customCursor"></div>
 
 <div class="left-container">
-    <img id="leftPreview" class="left-preview" alt="Project preview" />
+    <div class="title-stack">
+        <a href="index.html" onclick="myFunction()" class="logo">✻ Zach Montgomery</a>
 
-    <a href="index.html" onclick="myFunction()" class="logo">✻ Zach Montgomery</a>
+        <div class="right-container">
+            <button class="works-toggle" id="worksToggle" type="button">Work</button>
+            <div class="works-panel" id="worksPanel">
+                <div class="works-filters" id="worksFilters"></div>
+                <div class="works-list" id="worksList"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="leftProjectCarousel" class="left-project-carousel" aria-live="polite"></div>
 
     <div class="bottom-links">
         <a href="#" id="aboutLink">➝ About</a>
     </div>
 </div>
 
-<div class="right-container">
-    <div class="works-header">
-        <button class="works-toggle" id="worksToggle" type="button">Works</button>
-        <div class="works-view-toggle" id="worksViewToggle">
-            <button type="button" class="active" data-view="list">≡</button>
-            <button type="button" data-view="gallery">❏</button>
-        </div>
-    </div>
-    <div class="works-panel" id="worksPanel">
-        <div class="works-filters" id="worksFilters"></div>
-        <div class="works-list" id="worksList"></div>
-    </div>
-</div>
-
 <div class="third-container" id="thirdContainer">
+    <p>
     Zach is a multidisciplinary designer based in Richmond, VA.
-    He is currently a Studio Monitor & Instructor at
-    <a href="https://www.studiotwothree.org/">Studio Two Three,</a> has recently done 
-    Art Direction for <a href="https://commonwealthtimes.org/">The Commonwealth Times,</a>
-    and is actively freelancing.
-    <br /><br />
+    He is currently a Studio Monitor & Instructor at <a href="https://www.studiotwothree.org/">Studio Two Three,</a> has recently done
+Art Direction for <a href="https://commonwealthtimes.org/">The Commonwealth Times,</a>
+    and is actively freelancing.</p>
+    <br/>
+
     <p>
         Zach's practice specializes in editorial design and physical typographic printing.
-        His recent work explores constraints, production, precedents, and translation. 
-    </p><br />
-    Portfolio available upon request.<br /><br />
-    <a href="mailto:zm@zachmontgomery.us">zm@zachmontgomery.us</a><br /><br />
-    <a href="ZM26Resume.pdf">↝ Resume</a><br />
-    <a href="https://www.linkedin.com/in/zach-montgomery-13b935235/">↝ LinkedIn</a><br />
+        His recent work explores constraints, production, precedents, and translation.
+    </p>
+
+    <br />
+    Portfolio available upon request.
+    <br/><br/>
+
+    <a href="mailto:zm@zachmontgomery.us">zm@zachmontgomery.us</a>
+
+    <br/><br/>
+
+    <a href="ZM26Resume.pdf">↝ Resume</a><br>
+    <a href="https://www.linkedin.com/in/zach-montgomery-13b935235/">↝ LinkedIn</a><br>
     <a href="https://www.are.na/zach-montgomery">↝ Are.na</a>
+
+    <div class="third-close">
+        <a href="#" id="closeAbout">✕ Close</a>
+    </div>
 </div>
 
 <script>
 
 const customCursor = document.getElementById('customCursor');
 const thirdContainer = document.getElementById('thirdContainer');
-const leftPreview = document.getElementById('leftPreview');
 const worksToggle = document.getElementById('worksToggle');
 const worksPanel = document.getElementById('worksPanel');
 const worksList = document.getElementById('worksList');
-const worksViewToggle = document.getElementById('worksViewToggle');
 const worksFilters = document.getElementById('worksFilters');
-let currentView = 'list';
+const leftProjectCarousel = document.getElementById('leftProjectCarousel');
 let currentFilter = 'All';
 let worksData = [];
 
@@ -424,11 +565,6 @@ const rawSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQSWN6ldsUn
 const sheetCsvUrl = rawSheetUrl.includes('/pubhtml')
   ? rawSheetUrl.replace('/pubhtml', '/pub?output=csv')
   : rawSheetUrl;
-
-function getFreshSheetUrl() {
-  const separator = sheetCsvUrl.includes('?') ? '&' : '?';
-  return `${sheetCsvUrl}${separator}t=${Date.now()}`;
-}
 
 function parseCsv(text) {
   const rows = [];
@@ -485,8 +621,46 @@ function parseCsv(text) {
   });
 }
 
-function getTagValue(work) {
-  return (work.tags || work.tag || '').toLowerCase();
+function getImageUrls(work) {
+  const imageValue = work.image || work.photo || work.img || '';
+  return imageValue
+    .split(/\n|;/)
+    .map((value) => value.trim())
+    .filter(Boolean);
+}
+
+function showProjectImages(work, targetContainer) {
+  if (!targetContainer) return;
+
+  targetContainer.innerHTML = '';
+
+  const imageUrls = getImageUrls(work);
+  if (!imageUrls.length) return;
+
+  imageUrls.forEach((imageUrl) => {
+    const img = document.createElement('img');
+    img.src = imageUrl;
+    img.alt = work.title || work.name || 'Project image';
+    targetContainer.appendChild(img);
+  });
+}
+
+function clearProjectImages() {
+  if (leftProjectCarousel) {
+    leftProjectCarousel.innerHTML = '';
+  }
+
+  document.querySelectorAll('.work-details').forEach((details) => {
+    details.querySelectorAll('img').forEach((img) => img.remove());
+  });
+}
+
+function getTagValues(work) {
+  return (work.tags || work.tag || '')
+    .toLowerCase()
+    .split(',')
+    .map((value) => value.trim())
+    .filter(Boolean);
 }
 
 function getFilteredWorks(items) {
@@ -494,22 +668,23 @@ function getFilteredWorks(items) {
     return items;
   }
 
-  return items.filter((work) => getTagValue(work).includes(currentFilter));
+  return items.filter((work) => getTagValues(work).includes(currentFilter.toLowerCase()));
 }
 
 function renderFilterButtons(items) {
-  const tags = ['All', 'Editorial', 'Production', 'Identity', 'Teaching'];
+  const tags = ['All', 'Editorial', 'Identity', 'Production'];
   worksFilters.innerHTML = '';
 
   tags.forEach((tag) => {
     const button = document.createElement('button');
     button.type = 'button';
-    button.textContent = tag === 'All' ? 'All' : tag;
+    button.textContent = tag;
     button.className = currentFilter === tag ? 'active' : '';
     button.addEventListener('click', () => {
       currentFilter = tag;
       renderFilterButtons(items);
       renderWorks(items);
+      clearProjectImages();
     });
     worksFilters.appendChild(button);
   });
@@ -526,34 +701,6 @@ function renderWorks(items) {
     return;
   }
 
-  if (currentView === 'gallery') {
-    const grid = document.createElement('div');
-    grid.className = 'work-grid';
-
-    filteredItems.forEach((work) => {
-      const imageValue = work.image || work.photo || work.img || '';
-      const imageUrls = imageValue
-        .split(/\n|;/)
-        .map((value) => value.trim())
-        .filter(Boolean);
-
-      imageUrls.forEach((imageUrl) => {
-        const card = document.createElement('div');
-        card.className = 'work-card';
-
-        const image = document.createElement('img');
-        image.src = imageUrl;
-        image.alt = work.title || work.name || 'Work image';
-        card.appendChild(image);
-
-        grid.appendChild(card);
-      });
-    });
-
-    worksList.appendChild(grid);
-    return;
-  }
-
   filteredItems.forEach((work) => {
     const item = document.createElement('div');
     item.className = 'work-item';
@@ -561,7 +708,7 @@ function renderWorks(items) {
     const summary = document.createElement('button');
     summary.className = 'work-summary';
     summary.type = 'button';
-    summary.innerHTML = `<span>${work.title || work.name || 'Untitled work'}</span><span>+</span>`;
+    summary.innerHTML = `<span class="work-title">${work.title || work.name || 'Untitled work'}</span><span class="work-toggle-icon">+</span>`;
 
     const details = document.createElement('div');
     details.className = 'work-details';
@@ -572,39 +719,50 @@ function renderWorks(items) {
       details.appendChild(description);
     }
 
-    if (work.image || work.photo || work.img) {
-      const image = document.createElement('img');
-      image.src = work.image || work.photo || work.img;
-      image.alt = work.title || work.name || 'Work image';
-      details.appendChild(image);
-    }
+    summary.addEventListener('mouseenter', () => {
+      if (window.innerWidth <= 768) return;
+
+      const hasOpenProject = Array.from(worksList.children).some((otherItem) => otherItem.classList.contains('open'));
+      if (!hasOpenProject) {
+        showProjectImages(work, leftProjectCarousel);
+      }
+    });
+
+    summary.addEventListener('mouseleave', () => {
+      if (window.innerWidth <= 768) return;
+
+      const hasOpenProject = Array.from(worksList.children).some((otherItem) => otherItem.classList.contains('open'));
+      if (!hasOpenProject) {
+        clearProjectImages();
+      }
+    });
 
     summary.addEventListener('click', () => {
       const isOpen = item.classList.toggle('open');
-      const icon = summary.querySelector('span:last-child');
+      const icon = summary.querySelector('.work-toggle-icon');
       icon.textContent = isOpen ? '–' : '+';
 
       if (isOpen) {
         Array.from(worksList.children).forEach((otherItem) => {
           if (otherItem !== item) {
             otherItem.classList.remove('open');
-            otherItem.querySelector('.work-summary span:last-child').textContent = '+';
+            otherItem.classList.add('dimmed');
+            otherItem.querySelector('.work-toggle-icon').textContent = '+';
           }
         });
-      }
-    });
+        item.classList.remove('dimmed');
 
-    summary.addEventListener('mouseenter', () => {
-      const previewImage = work.image || work.photo || work.img;
-      if (previewImage) {
-        leftPreview.src = previewImage;
-        leftPreview.classList.add('active');
+        if (window.innerWidth <= 768) {
+          showProjectImages(work, details);
+        } else {
+          showProjectImages(work, leftProjectCarousel);
+        }
+      } else {
+        Array.from(worksList.children).forEach((otherItem) => {
+          otherItem.classList.remove('dimmed');
+        });
+        clearProjectImages();
       }
-    });
-
-    summary.addEventListener('mouseleave', () => {
-      leftPreview.classList.remove('active');
-      leftPreview.removeAttribute('src');
     });
 
     item.appendChild(summary);
@@ -620,7 +778,7 @@ async function loadWorks() {
   }
 
   try {
-    const response = await fetch(getFreshSheetUrl(), { mode: 'cors', cache: 'no-store' });
+    const response = await fetch(sheetCsvUrl, { mode: 'cors' });
     if (!response.ok) {
       throw new Error('Sheet could not be loaded');
     }
@@ -643,20 +801,6 @@ worksToggle.addEventListener('click', () => {
     loadWorks();
   }
 });
-
-worksViewToggle.querySelectorAll('button').forEach((button) => {
-  button.addEventListener('click', () => {
-    currentView = button.dataset.view;
-    worksViewToggle.querySelectorAll('button').forEach((btn) => btn.classList.toggle('active', btn === button));
-    renderWorks(worksData);
-  });
-});
-
-setInterval(() => {
-  if (worksPanel.classList.contains('open')) {
-    loadWorks();
-  }
-}, 15000);
 
 thirdContainer.addEventListener('mouseenter', () => {
   customCursor.style.borderColor = 'black';
@@ -693,13 +837,12 @@ document.getElementById('aboutLink').addEventListener('click', e => {
     document.body.classList.toggle('third-active');
 });
 
+document.getElementById('closeAbout').addEventListener('click', e => {
+    e.preventDefault();
+    document.getElementById('thirdContainer').classList.remove('active');
+    document.body.classList.remove('third-active');
+});
+
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
