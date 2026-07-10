@@ -35,6 +35,10 @@ a {
     text-decoration: none;
 }
 
+::selection {
+  background-color: #000000;
+}
+
 a:hover {
     color:#ff9900;
     mix-blend-mode: normal;
@@ -250,6 +254,13 @@ a:hover {
 
     .third-inner {
         width: 100%;
+    }
+
+    .third-container {
+        background: rgba(0, 0, 0, 0.639);
+        mix-blend-mode:normal;
+        backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
     }
 
      .project-viewer img.vertical {
