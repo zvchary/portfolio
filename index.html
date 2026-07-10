@@ -1,848 +1,742 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 <title>Zach Montgomery</title>
+
 <link rel="icon" type="image/x-icon" href="flavicon.png" />
 
 <style>
-@font-face {
-    font-family: 'Franklin Gothic Book';
-    src: url('./franklin-gothic-book.ttf') format('truetype'),
-    url('./franklin-gothic-book.woff2') format('woff2'),
-    url('./franklin-gothic-book.woff') format('woff');
-}
 
 @font-face {
-  font-family: 'Router';
-  src: url('./fonnts.com-router-webfont.woff') format('woff'),
-  url('./fonnts.com-router-webfont.woff2') format('woff2');
+    font-family: 'Router';
+    src: url('./fonnts.com-router-webfont.woff') format('woff'),
+         url('./fonnts.com-router-webfont.woff2') format('woff2');
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    cursor: none !important;
 }
 
 body {
     font-family: 'Router';
-    font-size: 1.9vh;
-    background-color: #ff9900;
-    display: flex;
-    min-height: 100dvh;
-    height: 100dvh;
+    background: #ff9900;
     overflow: hidden;
-    line-height: 1.3;
     cursor: none;
 }
 
 a {
     text-decoration: none;
-    color: black;
-    transition: color 0.4s ease;
-    cursor: none;
 }
 
-a:hover,
-.tab.active {
-    color: #ff9900;
-    cursor: none;
-}
-
-.tabs {
-    z-index: 100;
+a:hover {
+    color:#ff9900;
+    mix-blend-mode: normal;
 }
 
 .left-container {
-    padding: 36px;
-    width: 100%;
+    width: 100vw;
     height: 100dvh;
-    min-height: 100dvh;
     position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    z-index: 0;
-    background: white;
-    border-left: 10px solid #ff9900;
     overflow: hidden;
-    user-select: none;
+    background: white;
+}
+
+.logo,
+.right-container,
+.title-stack,
+.bottom-links,
+.third-container {
+    color: white;
+    mix-blend-mode: difference;
 }
 
 .title-stack {
+    position: absolute;
+    top: 36px;
+    left: 36px;
+    right: 36px;
+    z-index: 50;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     gap: 24px;
-    width: 100%;
 }
 
-.left-project-carousel {
-    position: absolute;
-    top: 50%;
-    left: 36px;
-    right: 36px;
-    transform: translateY(-50%);
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding-bottom: 8px;
-    scroll-snap-type: x proximity;
-    scrollbar-width: thin;
-    z-index: 2;
-    pointer-events: auto;
-}
-
-.left-project-carousel::after {
-    content: "";
-    flex: 0 0 calc(50vw + 36px); /* width of the Work panel + container padding */
-}
-
-.left-project-carousel:empty {
-    display: none;
-}
-
-.left-project-carousel img {
-    flex: 0 0 auto;
-    height: auto;
-    max-height: 570px;
-    width: auto;
-    max-width: min(70vw, 708px);
-    object-fit: cover;
-    align-self: flex-end;
-    scroll-snap-align: start;
-    opacity: 0;
-    animation: fadeInImage 0.35s ease forwards;
-}
-
-@keyframes fadeInImage {
-    from { opacity: 0; }
-    to { opacity: 1; }
+.logo {
+    font-size: 1rem;
 }
 
 .right-container {
-    width: 50%;
-    height: auto;
-    min-height: 0;
-    padding-left:36px;
-    padding-bottom:36px;
-    position: relative;
-    z-index: 5;
-    background: rgba(255, 255, 255, 0.72);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    user-select: none;
-    display: none;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 18px;
+    width: 55vh;
 }
 
-.works-toggle {
-    border: none;
-    background: transparent;
-    font: inherit;
-    color: black;
-    padding: 0;
-    cursor: none;
-}
-
-.works-toggle.active {
-    color: #ff9900;
-}
-
-.works-panel {
-    width: 100%;
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: max-height 0.35s ease, opacity 0.35s ease;
-}
-
-.works-panel.open {
-    max-height: 100vh;
-    opacity: 1;
-    overflow-y: auto;
-}
-
-.works-filters {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 10px;
-}
-
-.works-filters button {
-    border: none;
-    background: transparent;
-    font: inherit;
-    color: black;
-    padding: 0;
-    cursor: none;
-}
-
-.works-filters button.active {
-    color: #ff9900;
+.project-title {
     text-decoration: underline;
+    display: inline;
+    margin-right: 12px;
 }
 
-.works-list {
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-    overflow: visible;
-    padding-bottom: 36px;
-    -webkit-overflow-scrolling: touch;
-    max-height: calc(100dvh - 136px);
+.project-description {
+    line-height: 1.35;
 }
 
-.work-summary {
-    width: 100%;
-    text-align: left;
-    border: none;
-    background: transparent;
-    padding: 12px 0;
-    font: inherit;
-    color: black;
-    cursor: none;
+.project-viewer {
+    width: 100vw;
+    height: 100dvh;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    gap: 12px;
+    overflow: hidden;
+    position: relative;
 }
 
-.work-summary .work-title {
-    flex: 1;
-    text-align: left;
-}
-
-.work-summary .work-toggle-icon {
-    flex-shrink: 0;
-    font-size: 0.95em;
-}
-
-.work-summary:hover {
-    color: #ff9900;
-}
-
-.work-details {
-    display: none;
-    padding: 0 14px 14px;
-}
-
-.work-item {
-    border-bottom: 1px solid #000000;
-    transition: opacity 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-}
-
-.work-item.open {
-    border-bottom-color: #000000;
-}
-
-.work-item.dimmed {
-    opacity: 0.45;
-    border-bottom-color: #9a9a9a;
-}
-
-.work-item.dimmed .work-summary {
-    color: #7a7a7a;
-}
-
-.work-item.open .work-details {
+.project-viewer img {
     display: block;
+    object-fit: contain;
+    image-rendering: auto;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    will-change: opacity;
+    opacity: 1;
 }
 
-.work-details img {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-    margin-top: 10px;
-    display: block;
+.project-viewer img.vertical {
+    height: 100vh;
+    width: auto;
 }
 
-.work-details p {
-    margin-top: 8px;
-    font-size: 0.92rem;
+.project-viewer img.horizontal {
+    max-width: 100vw;
+    width: 100vw;
+    height: auto;
 }
 
-.work-details a {
-    color: #ff9900;
-    text-decoration: underline;
-    display: inline-block;
-    margin-top: 8px;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.nav-zone {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    z-index: 10;
+}
+
+.nav-left {
+    left: 0;
+}
+
+.nav-right {
+    right: 0;
 }
 
 .bottom-links {
     position: absolute;
-    bottom: 35px;
+    left: 36px;
+    bottom: 36px;
+    z-index: 60;
+    color: white;
+}
+
+.bottom-links a {
+    color: white;
+}
+
+.bottom-links a:hover {
+    color: orange;
+}
+
+.third-container a:hover {
+    color: orange;
 }
 
 .third-container {
-    padding: 36px;
     position: fixed;
     top: 0;
     left: -100%;
-    width: 25%;
-    height: 100vh;
-    background-color: #ff9900;
-    color: white;
-    opacity: 0.96;
+    width: 100vw;
+    height: 100dvh;
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    padding: 36px;
+    overflow: hidden;
+    z-index: 999;
     transform: translateX(-8px);
-    transition: left 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease;
-    z-index: 200;
-}
-
-#thirdContainer:hover {
-  cursor: black;
+    transition:
+        left 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
 }
 
 .third-container.active {
     left: 0;
     transform: translateX(0);
-    opacity: 1;
+    pointer-events: auto;
 }
 
-body.third-active .left-container {
-    border-left: none;
+.third-inner {
+    width: 50vw;
+    max-width: 700px;
+    min-height: calc(100dvh - 72px);
+    position: relative;
 }
 
-body.third-active {
-    margin-left: 25%;
-    transition: margin-left 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-
-body.third-active .image-box {
-    filter: blur(30px);
-    mask-image: linear-gradient(
-        to left,
-        black 0% 10%,
-        transparent 80% 100%
-    );
-    transition: filter 1s ease;
-}
-
-.third-container a:link,
-.third-container a:visited {
-    color: white;
+.third-container a {
     text-decoration: underline;
-}
-
-.third-container a:hover {
-    color: black;
+    color: white;
 }
 
 .third-close {
-    display: none;
-    text-decoration: none;
-}
-
-@media (max-width: 768px) {
-    body {
-        font-size: 2vh;
-        height: 100dvh;
-        min-height: 100dvh;
-        overflow: hidden;
-        flex-direction: column;
-    }
-
-    .left-container {
-        width: 100%;
-        height: 100dvh;
-        min-height: 100dvh;
-        padding: 36px;
-        border-left: 0;
-        border-bottom: 10px solid #ff9900;
-        justify-content: flex-start;
-        gap: 16px;
-    }
-
-       .title-stack {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-    }
-
-    .right-container {
-        width: auto;
-        padding: 0;
-        background: transparent;
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-        gap: 0;
-        align-items: flex-end;
-    flex: 0 0 auto;
-    }
-
-    .left-project-carousel {
-        display: none;
-    }
-
-    .works-panel {
-        width: min(320px, 90vw);
-        max-height: 0;
-        opacity: 0;
-        overflow: hidden;
-        transition: max-height 0.35s ease, opacity 0.35s ease;
-    }
-
-    .works-panel.open {
-        max-height: calc(100dvh - 140px);
-        opacity: 1;
-        overflow: hidden;
-    }
-
-    .works-list {
-        width: 100%;
-        max-height: calc(100dvh - 180px);
-        overflow-y: auto;
-        overflow-x: hidden;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    .work-summary {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        gap: 8px;
-        padding: 10px 0;
-    }
-
-    .work-summary .work-title {
-        flex: 1;
-    }
-
-    .work-summary .work-toggle-icon {
-        flex-shrink: 0;
-    }
-
-    .work-details {
-        padding: 0 0 12px;
-    }
-
-    .work-details img {
-        width: 100%;
-        height: auto;
-        max-height: 220px;
-        object-fit: cover;
-        margin-top: 8px;
-    }
-
-    .bottom-links {
-        position: static;
-        margin-top: auto;
-        padding-top: 8px;
-    }
-
-    .third-container {
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    height: 100dvh;
-    }
-
-    .third-close {
-        display: block;
-        margin-top: auto;
-        padding-top: 32px;
-        padding-bottom: 10px;
-    }
-
-    .third-close a {
-        color: white;
-    }
-
-    .third-close a:hover {
-        color: black;
-    }
-
-    .third-container.active {
-        width: 100%;
-        z-index:500;
-    }
-
-    .third-container.active, .bottom-links {
-        z-index:550;
-    }
-
-    body.third-active {
-        margin-left: 0;
-    }
-}
-
-
-#imageElement {
-  transition: opacity 1s ease-in-out;
-  opacity: 1;
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    display: block;
+    z-index: 2000;
 }
 
 #customCursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  border: 1px solid #ff9900;
-  box-shadow: 0 0 10px #ff9900, 0 0 20px #ff9900;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+
+    color: white;
+    mix-blend-mode: difference;
+    font-family: "Router";
+    font-size: 1.4rem;
+    line-height: 1;
+
+    user-select: none;
 }
+
+@media (max-width: 768px) {
+
+    body {
+        cursor: auto;
+        font-size: 1.8vh;
+    }
+
+    .logo {
+        font-size: 1.8vh;
+    }
+
+    #customCursor {
+        display: none;
+    }
+
+    .title-stack {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .right-container {
+        width: 100%;
+    }
+
+    .third-inner {
+        width: 100%;
+    }
+
+     .project-viewer img.vertical {
+        height: 100dvh;
+        width: auto;
+        max-width: 100vw;
+    }
+    .project-viewer img.horizontal {
+        height: 85dvh;
+        width: auto;
+        max-width: 140vw;
+    }
+}
+
 </style>
 </head>
 
 <body>
 
-<div id="customCursor"></div>
+<div id="customCursor">↖</div>
 
 <div class="left-container">
+
     <div class="title-stack">
-        <a href="index.html" onclick="myFunction()" class="logo">✻ Zach Montgomery</a>
+
+        <a href="index.html" class="logo">
+            ✻ Zach Montgomery
+        </a>
 
         <div class="right-container">
-            <button class="works-toggle" id="worksToggle" type="button">Work</button>
-            <div class="works-panel" id="worksPanel">
-                <div class="works-filters" id="worksFilters"></div>
-                <div class="works-list" id="worksList"></div>
+            <div class="project-description">
+                <span id="projectTitle" class="project-title">
+                    Loading...
+                </span>
+                <span id="projectDescription"></span>
             </div>
         </div>
+
     </div>
 
-    <div id="leftProjectCarousel" class="left-project-carousel" aria-live="polite"></div>
+    <div id="projectViewer" class="project-viewer"></div>
+
+    <div class="nav-zone nav-left" id="prevProject"></div>
+
+    <div class="nav-zone nav-right" id="nextProject"></div>
 
     <div class="bottom-links">
-        <a href="#" id="aboutLink">➝ About</a>
+        <a href="#" id="aboutLink">
+            ➝ About
+        </a>
     </div>
+
 </div>
 
 <div class="third-container" id="thirdContainer">
-    <p>
-    Zach is a multidisciplinary designer based in Richmond, VA.
-    He is currently a Studio Monitor & Instructor at <a href="https://www.studiotwothree.org/">Studio Two Three,</a> has recently done
-Art Direction for <a href="https://commonwealthtimes.org/">The Commonwealth Times,</a>
-    and is actively freelancing.</p>
-    <br/>
 
-    <p>
-        Zach's practice specializes in editorial design and physical typographic printing.
-        His recent work explores constraints, production, precedents, and translation.
-    </p>
+    <div class="third-inner">
 
-    <br />
-    Portfolio available upon request.
-    <br/><br/>
+        <p>
+            I'm a multidisciplinary designer based in Richmond, VA.
+            I'm currently a Studio Monitor & Instructor at
+            <a href="https://www.studiotwothree.org/">
+                Studio Two Three
+            </a>,
+            have recently done Art Direction for
+            <a href="https://commonwealthtimes.org/">
+                The Commonwealth Times
+            </a>,
+            and am actively freelancing.
+        </p>
 
-    <a href="mailto:zm@zachmontgomery.us">zm@zachmontgomery.us</a>
+        <br/>
 
-    <br/><br/>
+        <p>
+            My practice specializes in editorial/layout design and physical typographic printing.
+            Recent work explores constraints, production, precedents, and translation.
+        </p>
 
-    <a href="ZM26Resume.pdf">↝ Resume</a><br>
-    <a href="https://www.linkedin.com/in/zach-montgomery-13b935235/">↝ LinkedIn</a><br>
-    <a href="https://www.are.na/zach-montgomery">↝ Are.na</a>
+        <br/>
 
-    <div class="third-close">
-        <a href="#" id="closeAbout">✕ Close</a>
+        <a href="mailto:zm@zachmontgomery.us">
+            zm@zachmontgomery.us
+        </a>
+
+        <br/><br/>
+
+        <a href="ZM26Resume.pdf">
+            ↝ Resume
+        </a>
+
+        <br>
+
+        <a href="https://www.linkedin.com/in/zach-montgomery-13b935235/">
+            ↝ LinkedIn
+        </a>
+
+        <br>
+
+        <a href="https://www.are.na/zach-montgomery">
+            ↝ Are.na
+        </a>
+
+        <div class="third-close">
+            <a href="#" id="closeAbout">
+                ← Close
+            </a>
+        </div>
+
     </div>
+
 </div>
 
 <script>
 
-const customCursor = document.getElementById('customCursor');
-const thirdContainer = document.getElementById('thirdContainer');
-const worksToggle = document.getElementById('worksToggle');
-const worksPanel = document.getElementById('worksPanel');
-const worksList = document.getElementById('worksList');
-const worksFilters = document.getElementById('worksFilters');
-const leftProjectCarousel = document.getElementById('leftProjectCarousel');
-let currentFilter = 'All';
-let worksData = [];
+const leftContainer =
+    document.querySelector('.left-container');
 
-const rawSheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQSWN6ldsUnLW4ZExFG7E5F2A9aK_SPH_9Mba6lmdpg7P3z4V3PJxXYG5FZzmUnXZJV7H6e1cbgu_qy/pubhtml';
-const sheetCsvUrl = rawSheetUrl.includes('/pubhtml')
-  ? rawSheetUrl.replace('/pubhtml', '/pub?output=csv')
-  : rawSheetUrl;
+const projectViewer =
+    document.getElementById('projectViewer');
+
+const projectTitle =
+    document.getElementById('projectTitle');
+
+const projectDescription =
+    document.getElementById('projectDescription');
+
+const prevProject =
+    document.getElementById('prevProject');
+
+const nextProject =
+    document.getElementById('nextProject');
+
+prevProject.addEventListener("mouseenter", () => {
+    setCursor("←");
+});
+
+prevProject.addEventListener("mouseleave", () => {
+    setCursor("↖");
+});
+
+nextProject.addEventListener("mouseenter", () => {
+    setCursor("→");
+});
+
+nextProject.addEventListener("mouseleave", () => {
+    setCursor("↖");
+});
+
+const customCursor =
+    document.getElementById('customCursor');
+
+function setCursor(symbol) {
+    customCursor.textContent = symbol;
+}
+
+const rawSheetUrl =
+'https://docs.google.com/spreadsheets/d/e/2PACX-1vQSWN6ldsUnLW4ZExFG7E5F2A9aK_SPH_9Mba6lmdpg7P3z4V3PJxXYG5FZzmUnXZJV7H6e1cbgu_qy/pubhtml';
+
+const sheetCsvUrl =
+rawSheetUrl.replace(
+    '/pubhtml',
+    '/pub?output=csv'
+);
+
+let projects = [];
+
+let currentIndex = 0;
 
 function parseCsv(text) {
-  const rows = [];
-  let row = [];
-  let cell = '';
-  let inQuotes = false;
 
-  for (let i = 0; i < text.length; i += 1) {
-    const char = text[i];
+    const rows = [];
 
-    if (char === '"') {
-      if (inQuotes && text[i + 1] === '"') {
-        cell += '"';
-        i += 1;
-      } else {
-        inQuotes = !inQuotes;
-      }
-    } else if (char === ',' && !inQuotes) {
-      row.push(cell);
-      cell = '';
-    } else if ((char === '\n' || char === '\r') && !inQuotes) {
-      if (char === '\r' && text[i + 1] === '\n') {
-        i += 1;
-      }
-      row.push(cell);
-      if (row.some(value => value.trim())) {
-        rows.push(row);
-      }
-      row = [];
-      cell = '';
-    } else {
-      cell += char;
-    }
-  }
+    let row = [];
 
-  if (cell || row.length) {
-    row.push(cell);
-    if (row.some(value => value.trim())) {
-      rows.push(row);
-    }
-  }
+    let cell = '';
 
-  if (!rows.length) {
-    return [];
-  }
+    let inQuotes = false;
 
-  const headers = rows[0].map(header => header.trim().toLowerCase());
-  return rows.slice(1).filter(values => values.some(value => value.trim())).map(values => {
-    const item = {};
-    headers.forEach((header, index) => {
-      item[header] = (values[index] || '').trim();
-    });
-    return item;
-  });
-}
+    for (let i = 0; i < text.length; i++) {
 
-function getImageUrls(work) {
-  const imageValue = work.image || work.photo || work.img || '';
-  return imageValue
-    .split(/\n|;/)
-    .map((value) => value.trim())
-    .filter(Boolean);
-}
+        const char = text[i];
 
-function showProjectImages(work, targetContainer) {
-  if (!targetContainer) return;
+        if (char === '"') {
 
-  targetContainer.innerHTML = '';
+            if (
+                inQuotes &&
+                text[i + 1] === '"'
+            ) {
 
-  const imageUrls = getImageUrls(work);
-  if (!imageUrls.length) return;
+                cell += '"';
 
-  imageUrls.forEach((imageUrl) => {
-    const img = document.createElement('img');
-    img.src = imageUrl;
-    img.alt = work.title || work.name || 'Project image';
-    targetContainer.appendChild(img);
-  });
-}
+                i++;
 
-function clearProjectImages() {
-  if (leftProjectCarousel) {
-    leftProjectCarousel.innerHTML = '';
-  }
+            } else {
 
-  document.querySelectorAll('.work-details').forEach((details) => {
-    details.querySelectorAll('img').forEach((img) => img.remove());
-  });
-}
+                inQuotes = !inQuotes;
+            }
 
-function getTagValues(work) {
-  return (work.tags || work.tag || '')
-    .toLowerCase()
-    .split(',')
-    .map((value) => value.trim())
-    .filter(Boolean);
-}
+        } else if (
+            char === ',' &&
+            !inQuotes
+        ) {
 
-function getFilteredWorks(items) {
-  if (currentFilter === 'All') {
-    return items;
-  }
+            row.push(cell);
 
-  return items.filter((work) => getTagValues(work).includes(currentFilter.toLowerCase()));
-}
+            cell = '';
 
-function renderFilterButtons(items) {
-  const tags = ['All', 'Editorial', 'Identity', 'Production'];
-  worksFilters.innerHTML = '';
+        } else if (
+            (char === '\n' || char === '\r') &&
+            !inQuotes
+        ) {
 
-  tags.forEach((tag) => {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.textContent = tag;
-    button.className = currentFilter === tag ? 'active' : '';
-    button.addEventListener('click', () => {
-      currentFilter = tag;
-      renderFilterButtons(items);
-      renderWorks(items);
-      clearProjectImages();
-    });
-    worksFilters.appendChild(button);
-  });
-}
+            if (
+                char === '\r' &&
+                text[i + 1] === '\n'
+            ) {
 
-function renderWorks(items) {
-  worksData = items;
-  worksList.innerHTML = '';
+                i++;
+            }
 
-  const filteredItems = getFilteredWorks(items);
+            row.push(cell);
 
-  if (!filteredItems.length) {
-    worksList.innerHTML = '<p>No works available yet.</p>';
-    return;
-  }
+            if (
+                row.some(value =>
+                    value.trim()
+                )
+            ) {
 
-  filteredItems.forEach((work) => {
-    const item = document.createElement('div');
-    item.className = 'work-item';
+                rows.push(row);
+            }
 
-    const summary = document.createElement('button');
-    summary.className = 'work-summary';
-    summary.type = 'button';
-    summary.innerHTML = `<span class="work-title">${work.title || work.name || 'Untitled work'}</span><span class="work-toggle-icon">+</span>`;
+            row = [];
 
-    const details = document.createElement('div');
-    details.className = 'work-details';
+            cell = '';
 
-    if (work.description || work.desc || work.text) {
-      const description = document.createElement('p');
-      description.textContent = work.description || work.desc || work.text;
-      details.appendChild(description);
-    }
-
-    summary.addEventListener('mouseenter', () => {
-      if (window.innerWidth <= 768) return;
-
-      const hasOpenProject = Array.from(worksList.children).some((otherItem) => otherItem.classList.contains('open'));
-      if (!hasOpenProject) {
-        showProjectImages(work, leftProjectCarousel);
-      }
-    });
-
-    summary.addEventListener('mouseleave', () => {
-      if (window.innerWidth <= 768) return;
-
-      const hasOpenProject = Array.from(worksList.children).some((otherItem) => otherItem.classList.contains('open'));
-      if (!hasOpenProject) {
-        clearProjectImages();
-      }
-    });
-
-    summary.addEventListener('click', () => {
-      const isOpen = item.classList.toggle('open');
-      const icon = summary.querySelector('.work-toggle-icon');
-      icon.textContent = isOpen ? '–' : '+';
-
-      if (isOpen) {
-        Array.from(worksList.children).forEach((otherItem) => {
-          if (otherItem !== item) {
-            otherItem.classList.remove('open');
-            otherItem.classList.add('dimmed');
-            otherItem.querySelector('.work-toggle-icon').textContent = '+';
-          }
-        });
-        item.classList.remove('dimmed');
-
-        if (window.innerWidth <= 768) {
-          showProjectImages(work, details);
         } else {
-          showProjectImages(work, leftProjectCarousel);
+
+            cell += char;
         }
-      } else {
-        Array.from(worksList.children).forEach((otherItem) => {
-          otherItem.classList.remove('dimmed');
-        });
-        clearProjectImages();
-      }
-    });
-
-    item.appendChild(summary);
-    item.appendChild(details);
-    worksList.appendChild(item);
-  });
-}
-
-async function loadWorks() {
-  if (!sheetCsvUrl || sheetCsvUrl.includes('YOUR_SHEET_ID')) {
-    worksList.innerHTML = '<p>Replace the Google Sheet URL in the page script.</p>';
-    return;
-  }
-
-  try {
-    const response = await fetch(sheetCsvUrl, { mode: 'cors' });
-    if (!response.ok) {
-      throw new Error('Sheet could not be loaded');
     }
 
-    const csvText = await response.text();
-    const data = parseCsv(csvText);
-    renderFilterButtons(data);
-    renderWorks(data);
-  } catch (error) {
-    console.error(error);
-    worksList.innerHTML = '<p>Unable to load works from the Google Sheet.</p>';
-  }
+    if (cell || row.length) {
+
+        row.push(cell);
+
+        rows.push(row);
+    }
+
+    const headers = rows[0].map(header =>
+        header.trim().toLowerCase()
+    );
+
+    return rows
+        .slice(1)
+        .map(values => {
+
+            const item = {};
+
+            headers.forEach(
+                (header, index) => {
+
+                item[header] =
+                    (values[index] || '').trim();
+            });
+
+            return item;
+        });
 }
 
-worksToggle.addEventListener('click', () => {
-  const isOpen = worksPanel.classList.toggle('open');
-  worksToggle.classList.toggle('active', isOpen);
+function getImages(project) {
 
-  if (isOpen) {
-    loadWorks();
-  }
-});
+    return (
+        project.image ||
+        project.images ||
+        project.photo ||
+        ''
+    )
 
-thirdContainer.addEventListener('mouseenter', () => {
-  customCursor.style.borderColor = 'black';
-  customCursor.style.boxShadow = '0 0 10px black, 0 0 20px black';
-});
+    .split(/\n|,|;/)
 
-thirdContainer.addEventListener('mouseleave', () => {
-  customCursor.style.borderColor = '#ff9900';
-  customCursor.style.boxShadow = '0 0 10px #ff9900, 0 0 20px #ff9900';
-});
+    .map(img => img.trim())
 
-const cursor = document.getElementById('customCursor');
-
-document.addEventListener('mousemove', e => {
-  cursor.style.top = e.clientY + 'px';
-  cursor.style.left = e.clientX + 'px';
-});
-
-document.addEventListener('mousedown', () => {
-  customCursor.style.backgroundColor = 'orange';
-});
-
-document.addEventListener('mouseup', () => {
-  customCursor.style.backgroundColor = ''; 
-});
-
-function myFunction() {
-  window.location.reload();
+    .filter(Boolean);
 }
 
-document.getElementById('aboutLink').addEventListener('click', e => {
-    e.preventDefault();
-    document.getElementById('thirdContainer').classList.toggle('active');
-    document.body.classList.toggle('third-active');
+function renderProject(index) {
+
+    const project = projects[index];
+
+    const desktopHeight = parseFloat(project.desktopheight);
+    const mobileHeight = parseFloat(project.mobileheight);
+
+    if (!project) return;
+
+    const bg =
+    (project.bg || '').trim();
+
+    leftContainer.style.backgroundColor =
+        bg || '#ffffff';
+
+    const images = getImages(project);
+
+    projectTitle.textContent =
+        project.title || 'Untitled';
+
+    projectDescription.textContent =
+        project.description || '';
+
+    projectViewer.innerHTML = '';
+
+    if (!images.length) return;
+
+    const img = document.createElement('img');
+
+    const customHeight =
+    window.innerWidth <= 768
+        ? parseFloat(project.mobileheight)
+        : parseFloat(project.desktopheight);
+
+    img.alt = project.title || 'Project image';
+
+    img.loading = 'eager';
+
+    img.decoding = 'sync';
+
+    img.fetchPriority = 'high';
+
+    img.style.visibility = 'hidden';
+
+    img.onload = () => {
+
+    const isMobile = window.innerWidth <= 768;
+
+    const customHeight = isMobile
+        ? mobileHeight
+        : desktopHeight;
+
+    if (!isNaN(customHeight)) {
+
+        img.style.height = `${customHeight}dvh`;
+        img.style.width = "auto";
+        img.style.maxWidth = "100vw";
+
+    } else if (img.naturalWidth > img.naturalHeight) {
+
+        img.classList.add("horizontal");
+
+    } else {
+
+        img.classList.add("vertical");
+
+    }
+
+    img.style.visibility = "visible";
+};
+
+    img.src = images[0];
+
+    projectViewer.appendChild(img);
+}
+
+function nextProjectFunc() {
+
+    currentIndex++;
+
+    if (currentIndex >= projects.length) {
+        currentIndex = 0;
+    }
+
+    renderProject(currentIndex);
+}
+
+function prevProjectFunc() {
+
+    currentIndex--;
+
+    if (currentIndex < 0) {
+        currentIndex = projects.length - 1;
+    }
+
+    renderProject(currentIndex);
+}
+
+nextProject.addEventListener(
+    'click',
+    nextProjectFunc
+);
+
+prevProject.addEventListener(
+    'click',
+    prevProjectFunc
+);
+
+document.addEventListener(
+    'keydown',
+    e => {
+
+    if (e.key === 'ArrowRight') {
+        nextProjectFunc();
+    }
+
+    if (e.key === 'ArrowLeft') {
+        prevProjectFunc();
+    }
 });
 
-document.getElementById('closeAbout').addEventListener('click', e => {
+async function loadProjects() {
+
+    try {
+
+        const response =
+            await fetch(sheetCsvUrl);
+
+        const csv =
+            await response.text();
+
+        projects = parseCsv(csv);
+
+        renderProject(currentIndex);
+
+    } catch (error) {
+
+        console.error(error);
+
+        projectTitle.textContent =
+            'Unable to load projects.';
+    }
+}
+
+loadProjects();
+
+document.addEventListener(
+    'mousemove',
+    e => {
+
+    customCursor.style.left =
+        e.clientX + 'px';
+
+    customCursor.style.top =
+        e.clientY + 'px';
+});
+
+document.addEventListener(
+    'mousedown',
+    () => {
+
+    customCursor.style.color =
+        '#ff9900';
+});
+
+document.addEventListener(
+    'mouseup',
+    () => {
+
+    customCursor.style.color =
+        'white';
+});
+
+document
+.getElementById('aboutLink')
+
+.addEventListener(
+    'click',
+    e => {
+
     e.preventDefault();
-    document.getElementById('thirdContainer').classList.remove('active');
-    document.body.classList.remove('third-active');
+
+    document
+        .getElementById('thirdContainer')
+        .classList.add('active');
+});
+
+document
+.getElementById('closeAbout')
+
+.addEventListener(
+    'click',
+    e => {
+
+    e.preventDefault();
+
+    document
+        .getElementById('thirdContainer')
+        .classList.remove('active');
 });
 
 </script>
+
 </body>
 </html>
