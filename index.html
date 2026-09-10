@@ -91,14 +91,15 @@ a:hover {
     line-height: 1.35;
 }
 
-.project-viewer {
-    width: 100vw;
-    height: 100dvh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    position: relative;
+.project-viewer img {
+    display: block;
+    object-fit: contain;
+    image-rendering: auto;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    position: absolute;
+    opacity: 1;
+    transition: opacity 0.5s ease;
 }
 
 .project-viewer img {
@@ -573,13 +574,13 @@ function renderProject(index) {
 
     const project = projects[index];
 
+    if (!project) return;
+
     const desktopHeight = parseFloat(project.desktopheight);
     const mobileHeight = parseFloat(project.mobileheight);
 
-    if (!project) return;
-
     const bg =
-    (project.bg || '').trim();
+        (project.bg || '').trim();
 
     leftContainer.style.backgroundColor =
         bg || '#ffffff';
@@ -592,57 +593,76 @@ function renderProject(index) {
     projectDescription.textContent =
         project.description || '';
 
-    projectViewer.innerHTML = '';
-
     if (!images.length) return;
+
+    const oldImg =
+        projectViewer.querySelector('img');
 
     const img = document.createElement('img');
 
-    const customHeight =
-    window.innerWidth <= 768
-        ? parseFloat(project.mobileheight)
-        : parseFloat(project.desktopheight);
+    const isMobile =
+        window.innerWidth <= 768;
 
-    img.alt = project.title || 'Project image';
+    const customHeight =
+        isMobile
+            ? mobileHeight
+            : desktopHeight;
+
+    img.alt =
+        project.title || 'Project image';
 
     img.loading = 'eager';
-
     img.decoding = 'sync';
-
     img.fetchPriority = 'high';
 
-    img.style.visibility = 'hidden';
+    img.style.opacity = '0';
 
     img.onload = () => {
 
-    const isMobile = window.innerWidth <= 768;
+        if (!isNaN(customHeight)) {
 
-    const customHeight = isMobile
-        ? mobileHeight
-        : desktopHeight;
+            img.style.height =
+                `${customHeight}dvh`;
 
-    if (!isNaN(customHeight)) {
+            img.style.width = "auto";
+            img.style.maxWidth = "100vw";
 
-        img.style.height = `${customHeight}dvh`;
-        img.style.width = "auto";
-        img.style.maxWidth = "100vw";
+        } else if (
+            img.naturalWidth >
+            img.naturalHeight
+        ) {
 
-    } else if (img.naturalWidth > img.naturalHeight) {
+            img.classList.add("horizontal");
 
-        img.classList.add("horizontal");
+        } else {
 
-    } else {
+            img.classList.add("vertical");
+        }
 
-        img.classList.add("vertical");
+        // Put the new image into the viewer
+        projectViewer.appendChild(img);
 
-    }
+        // Trigger fade in
+        requestAnimationFrame(() => {
+            img.style.opacity = '1';
+        });
 
-    img.style.visibility = "visible";
-};
+        // Fade out and remove previous image
+        if (oldImg) {
+
+            oldImg.style.opacity = '0';
+
+            setTimeout(() => {
+
+                if (oldImg.parentNode) {
+                    oldImg.remove();
+                }
+
+            }, 500);
+        }
+    };
 
     img.src = images[0];
-
-    projectViewer.appendChild(img);
 }
 
 function nextProjectFunc() {
