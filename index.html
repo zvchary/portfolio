@@ -12,48 +12,44 @@
 <style>
 
 @font-face {
-    font-family: 'Router';
-    src: url('./fonnts.com-router-webfont.woff') format('woff'),
-         url('./fonnts.com-router-webfont.woff2') format('woff2');
+font-family: 'Router';
+src: url('./fonnts.com-router-webfont.woff') format('woff'),
+url('./fonnts.com-router-webfont.woff2') format('woff2');
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    cursor: none !important;
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+cursor: none !important;
 }
 
 body {
-    font-family: 'Router';
-    background: #ff9900;
-    overflow: hidden;
-    cursor: none;
+font-family: 'Router';
+background: #ff9900;
+overflow: hidden;
+cursor: none;
 }
 
 a {
-    text-decoration: none;
-}
-
-h1{
-    font-size: 1rem;
+text-decoration: none;
 }
 
 ::selection {
-  background-color: #000000;
+background-color: #000000;
 }
 
 a:hover {
-    color:#ff9900;
-    mix-blend-mode: normal;
+color:#ff9900;
+mix-blend-mode: normal;
 }
 
 .left-container {
-    width: 100vw;
-    height: 100dvh;
-    position: relative;
-    overflow: hidden;
-    background: white;
+width: 100vw;
+height: 100dvh;
+position: relative;
+overflow: hidden;
+background: white;
 }
 
 .logo,
@@ -61,220 +57,222 @@ a:hover {
 .title-stack,
 .bottom-links,
 .third-container {
-    color: white;
-    mix-blend-mode: difference;
+color: white;
+mix-blend-mode: difference;
 }
 
 .title-stack {
-    position: absolute;
-    top: 36px;
-    left: 36px;
-    right: 36px;
-    z-index: 50;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 24px;
+position: absolute;
+top: 36px;
+left: 36px;
+right: 36px;
+z-index: 50;
+display: flex;
+justify-content: space-between;
+align-items: flex-start;
+gap: 24px;
 }
 
 .logo {
-    font-size: 1rem;
+font-size: 1rem;
 }
 
 .right-container {
-    width: 55vh;
+width: 55vh;
 }
 
 .project-title {
-    text-decoration: underline;
-    display: inline;
-    margin-right: 2px;
+text-decoration: underline;
+display: inline;
+margin-right: 2px;
 }
 
 .project-description {
-    line-height: 1.35;
+line-height: 1.35;
 }
 
 .project-viewer {
-    width: 100vw;
-    height: 100dvh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    position: relative;
+width: 100vw;
+height: 100dvh;
+display: flex;
+justify-content: center;
+align-items: center;
+overflow: hidden;
+position: relative;
 }
 
 .project-viewer img {
-    display: block;
-    object-fit: contain;
-    image-rendering: auto;
-    backface-visibility: hidden;
-    transform: translateZ(0);
-    will-change: opacity;
-    opacity: 1;
+display: block;
+object-fit: contain;
+image-rendering: auto;
+backface-visibility: hidden;
+transform: translateZ(0);
+will-change: opacity;
+opacity: 1;
 }
 
 .project-viewer img.vertical {
-    height: 100vh;
-    width: auto;
+height: 100vh;
+width: auto;
 }
 
 .project-viewer img.horizontal {
-    max-width: 100vw;
-    width: 100vw;
-    height: auto;
+max-width: 100vw;
+width: 100vw;
+height: auto;
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
+from {
+opacity: 0;
+}
 
-    to {
-        opacity: 1;
-    }
+to {
+opacity: 1;
+}
 }
 
 .nav-zone {
-    position: absolute;
-    top: 0;
-    width: 50%;
-    height: 100%;
-    z-index: 10;
+position: absolute;
+top: 0;
+width: 50%;
+height: 100%;
+z-index: 10;
 }
 
 .nav-left {
-    left: 0;
+left: 0;
 }
 
 .nav-right {
-    right: 0;
+right: 0;
 }
 
 .bottom-links {
-    position: absolute;
-    left: 36px;
-    bottom: 36px;
-    z-index: 60;
-    color: white;
+position: absolute;
+left: 36px;
+bottom: 36px;
+z-index: 60;
+color: white;
 }
 
 .bottom-links a {
-    color: white;
+color: white;
 }
 
 .bottom-links a:hover {
-    color: orange;
+color: orange;
 }
 
 .third-container a:hover {
-    color: orange;
+color: orange;
 }
 
 .third-container {
-    position: fixed;
-    top: 0;
-    left: -100%;
-    width: 100vw;
-    height: 100dvh;
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
-    padding: 36px;
-    overflow: hidden;
-    z-index: 999;
-    transform: translateX(-8px);
-    transition:
-        left 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-    pointer-events: none;
+position: fixed;
+top: 0;
+left: -100%;
+width: 100vw;
+height: 100dvh;
+backdrop-filter: blur(30px);
+-webkit-backdrop-filter: blur(30px);
+padding: 36px;
+overflow: hidden;
+z-index: 999;
+transform: translateX(-8px);
+transition:
+left 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+pointer-events: none;
 }
 
 .third-container.active {
-    left: 0;
-    transform: translateX(0);
-    pointer-events: auto;
+left: 0;
+transform: translateX(0);
+pointer-events: auto;
 }
 
 .third-inner {
-    width: 50vw;
-    max-width: 700px;
-    min-height: calc(100dvh - 72px);
-    position: relative;
+width: 50vw;
+max-width: 700px;
+min-height: calc(100dvh - 72px);
+position: relative;
 }
 
 .third-container a {
-    text-decoration: underline;
-    color: white;
+text-decoration: underline;
+color: white;
 }
 
 .third-close {
-    position: absolute;
-    left: 0;
-    bottom: 0px;
-    display: block;
-    z-index: 2000;
+position: absolute;
+left: 0;
+bottom: 0px;
+display: block;
+z-index: 2000;
 }
 
 #customCursor {
-    position: fixed;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    z-index: 9999;
+position: fixed;
+top: 0;
+left: 0;
+pointer-events: none;
+z-index: 9999;
 
-    color: white;
-    mix-blend-mode: difference;
-    font-family: "Router";
-    font-size: 1.4rem;
-    line-height: 1;
+color: white;
+mix-blend-mode: difference;
+font-family: "Router";
+font-size: 1.4rem;
+line-height: 1;
 
-    user-select: none;
+user-select: none;
 }
 
 @media (max-width: 768px) {
 
-    body {
-        cursor: auto;
-        font-size: 1.8vh;
-    }
+body {
+cursor: auto;
+font-size: 1.8vh;
+}
 
-    .logo {
-        font-size: 1.8vh;
-    }
+.logo {
+font-size: 1.8vh;
+}
 
-    #customCursor {
-        display: none;
-    }
+#customCursor {
+display: none;
+}
 
-    .title-stack {
-        flex-direction: column;
-        gap: 16px;
-    }
+.title-stack {
+flex-direction: column;
+gap: 16px;
+}
 
-    .right-container {
-        width: 100%;
-    }
+.right-container {
+width: 100%;
+}
 
-    .third-inner {
-        width: 100%;
-    }
+.third-inner {
+width: 100%;
+}
 
-    .third-container {
-        background: rgba(0, 0, 0, 0.639);
-        mix-blend-mode:normal;
-        backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
-    }
+.third-container {
+background: rgba(0, 0, 0, 0.639);
+mix-blend-mode:normal;
+backdrop-filter: blur(30px);
+-webkit-backdrop-filter: blur(30px);
+}
 
-     .project-viewer img.vertical {
-        width: auto;
-        max-width: 100vw;
-    }
-    .project-viewer img.horizontal {
-        width: auto;
-        max-width: 140vw;
-    }
+.project-viewer img.vertical {
+height: 100dvh;
+width: auto;
+max-width: 100vw;
+}
+.project-viewer img.horizontal {
+height: 85dvh;
+width: auto;
+max-width: 140vw;
+}
 }
 
 </style>
@@ -286,137 +284,162 @@ a:hover {
 
 <div class="left-container">
 
-    <div class="title-stack">
+<div class="title-stack">
 
-        <a href="index.html" class="logo">
-            ✻ Zach Montgomery
-        </a>
+<a href="index.html" class="logo">
+✻ Zach Montgomery
+</a>
 
-        <div class="right-container">
-            <div class="project-description">
-                <span id="projectTitle" class="project-title">
-                    Loading...
-                </span>
-                <span id="projectDescription"></span>
-            </div>
-        </div>
+<div class="right-container">
+<div class="project-description">
+<span id="projectTitle" class="project-title">
+Loading...
+</span>
+<span id="projectDescription"></span>
+</div>
+</div>
 
-    </div>
+</div>
 
-    <div id="projectViewer" class="project-viewer"></div>
+<div id="projectViewer" class="project-viewer"></div>
 
-    <div class="nav-zone nav-left" id="prevProject"></div>
+<div class="nav-zone nav-left" id="prevProject"></div>
 
-    <div class="nav-zone nav-right" id="nextProject"></div>
+<div class="nav-zone nav-right" id="nextProject"></div>
 
-    <div class="bottom-links">
-        <a href="#" id="aboutLink">
-            ➝ About
-        </a>
-    </div>
+<div class="bottom-links">
+<a href="#" id="aboutLink">
+➝ About
+</a>
+</div>
 
 </div>
 
 <div class="third-container" id="thirdContainer">
 
-    <div class="third-inner">
+<div class="third-inner">
 
-        <p><h1>
-            I'm a multidisciplinary designer based in Richmond, VA.
-            I'm currently a Studio Monitor & Instructor at
-            <a href="https://www.studiotwothree.org/">
-                Studio Two Three
-            </a>,
-            have recently done Art Direction for
-            <a href="https://commonwealthtimes.org/">
-                The Commonwealth Times
-            </a>,
-            and am actively freelancing.
-            </h1>
-        </p>
+<p>
+I'm a multidisciplinary designer based in Richmond, VA.
+I'm currently a Studio Monitor & Instructor at
+<a href="https://www.studiotwothree.org/">
+Studio Two Three
+</a>,
+have recently done Art Direction for
+<a href="https://commonwealthtimes.org/">
+The Commonwealth Times
+</a>,
+and am actively freelancing. 
+<br/><br/>
+My practice specializes in editorial/layout design and physical typographic printing.
+Recent work explores constraints, production, precedents, and translation.
+</p>
 
-        <br/>
+<br/>
 
-        <p>
-            My practice specializes in editorial/layout design and physical typographic printing.
-            Recent work explores constraints, production, precedents, and translation.
-        </p>
+<p>
+Past clients + collaborations include:<br/>
+<a href="https://icavcu.org/">
+Institute for Contemporary Art at Virginia Commonwealth University
+</a><br/>
+            <a href="https://engage.richmond.edu/">
+               University of Richmond Bonner Center for Civic Engagement
+            </a><br/>
+<a href="https://arts.vcu.edu/community-campus/the-anderson/">
+VCUarts The Anderson
+</a><br/>
+<a href="https://www.clog-online.com/">
+CLOG Magazine
+</a><br/>
+<a href="https://ours.today/">
+Ours
+</a><br/>
+<a href="https://thealiens.online/">
+The Aliens
+            </a><br/>
+            <a href="https://engage.richmond.edu/">
+               University of Richmond Bonner Center for Civic Engagement
+</a><br/>
+<a href="https://www.acluva.org/">
+ACLU of Virginia
+</a>
+</p>
 
-        <br/>
+<br/>✻<br/><br/>
 
-        <a href="mailto:zm@zachmontgomery.us">
-            zm@zachmontgomery.us
-        </a>
+<a href="mailto:zm@zachmontgomery.us">
+zm@zachmontgomery.us
+</a>
 
-        <br/><br/>
+<br/><br/>
 
-        <a href="ZM26Resume.pdf">
-            ↝ Resume
-        </a>
+<a href="ZM26Resume.pdf">
+↝ Resume
+</a>
 
-        <br>
+<br>
 
-        <a href="https://www.linkedin.com/in/zach-montgomery-13b935235/">
-            ↝ LinkedIn
-        </a>
+<a href="https://www.linkedin.com/in/zach-montgomery-13b935235/">
+↝ LinkedIn
+</a>
 
-        <br>
+<br>
 
-        <a href="https://www.are.na/zach-montgomery">
-            ↝ Are.na
-        </a>
+<a href="https://www.are.na/zach-montgomery">
+↝ Are.na
+</a>
 
-        <div class="third-close">
-            <a href="#" id="closeAbout">
-                ← Close
-            </a>
-        </div>
+<div class="third-close">
+<a href="#" id="closeAbout">
+← Close
+</a>
+</div>
 
-    </div>
+</div>
 
 </div>
 
 <script>
 
 const leftContainer =
-    document.querySelector('.left-container');
+document.querySelector('.left-container');
 
 const projectViewer =
-    document.getElementById('projectViewer');
+document.getElementById('projectViewer');
 
 const projectTitle =
-    document.getElementById('projectTitle');
+document.getElementById('projectTitle');
 
 const projectDescription =
-    document.getElementById('projectDescription');
+document.getElementById('projectDescription');
 
 const prevProject =
-    document.getElementById('prevProject');
+document.getElementById('prevProject');
 
 const nextProject =
-    document.getElementById('nextProject');
+document.getElementById('nextProject');
 
 prevProject.addEventListener("mouseenter", () => {
-    setCursor("←");
+setCursor("←");
 });
 
 prevProject.addEventListener("mouseleave", () => {
-    setCursor("↖");
+setCursor("↖");
 });
 
 nextProject.addEventListener("mouseenter", () => {
-    setCursor("→");
+setCursor("→");
 });
 
 nextProject.addEventListener("mouseleave", () => {
-    setCursor("↖");
+setCursor("↖");
 });
 
 const customCursor =
-    document.getElementById('customCursor');
+document.getElementById('customCursor');
 
 function setCursor(symbol) {
-    customCursor.textContent = symbol;
+customCursor.textContent = symbol;
 }
 
 const rawSheetUrl =
@@ -424,8 +447,8 @@ const rawSheetUrl =
 
 const sheetCsvUrl =
 rawSheetUrl.replace(
-    '/pubhtml',
-    '/pub?output=csv'
+'/pubhtml',
+'/pub?output=csv'
 );
 
 let projects = [];
@@ -434,320 +457,320 @@ let currentIndex = 0;
 
 function parseCsv(text) {
 
-    const rows = [];
+const rows = [];
 
-    let row = [];
+let row = [];
 
-    let cell = '';
+let cell = '';
 
-    let inQuotes = false;
+let inQuotes = false;
 
-    for (let i = 0; i < text.length; i++) {
+for (let i = 0; i < text.length; i++) {
 
-        const char = text[i];
+const char = text[i];
 
-        if (char === '"') {
+if (char === '"') {
 
-            if (
-                inQuotes &&
-                text[i + 1] === '"'
-            ) {
+if (
+inQuotes &&
+text[i + 1] === '"'
+) {
 
-                cell += '"';
+cell += '"';
 
-                i++;
+i++;
 
-            } else {
+} else {
 
-                inQuotes = !inQuotes;
-            }
+inQuotes = !inQuotes;
+}
 
-        } else if (
-            char === ',' &&
-            !inQuotes
-        ) {
+} else if (
+char === ',' &&
+!inQuotes
+) {
 
-            row.push(cell);
+row.push(cell);
 
-            cell = '';
+cell = '';
 
-        } else if (
-            (char === '\n' || char === '\r') &&
-            !inQuotes
-        ) {
+} else if (
+(char === '\n' || char === '\r') &&
+!inQuotes
+) {
 
-            if (
-                char === '\r' &&
-                text[i + 1] === '\n'
-            ) {
+if (
+char === '\r' &&
+text[i + 1] === '\n'
+) {
 
-                i++;
-            }
+i++;
+}
 
-            row.push(cell);
+row.push(cell);
 
-            if (
-                row.some(value =>
-                    value.trim()
-                )
-            ) {
+if (
+row.some(value =>
+value.trim()
+)
+) {
 
-                rows.push(row);
-            }
+rows.push(row);
+}
 
-            row = [];
+row = [];
 
-            cell = '';
+cell = '';
 
-        } else {
+} else {
 
-            cell += char;
-        }
-    }
+cell += char;
+}
+}
 
-    if (cell || row.length) {
+if (cell || row.length) {
 
-        row.push(cell);
+row.push(cell);
 
-        rows.push(row);
-    }
+rows.push(row);
+}
 
-    const headers = rows[0].map(header =>
-        header.trim().toLowerCase()
-    );
+const headers = rows[0].map(header =>
+header.trim().toLowerCase()
+);
 
-    return rows
-        .slice(1)
-        .map(values => {
+return rows
+.slice(1)
+.map(values => {
 
-            const item = {};
+const item = {};
 
-            headers.forEach(
-                (header, index) => {
+headers.forEach(
+(header, index) => {
 
-                item[header] =
-                    (values[index] || '').trim();
-            });
+item[header] =
+(values[index] || '').trim();
+});
 
-            return item;
-        });
+return item;
+});
 }
 
 function getImages(project) {
 
-    return (
-        project.image ||
-        project.images ||
-        project.photo ||
-        ''
-    )
+return (
+project.image ||
+project.images ||
+project.photo ||
+''
+)
 
-    .split(/\n|,|;/)
+.split(/\n|,|;/)
 
-    .map(img => img.trim())
+.map(img => img.trim())
 
-    .filter(Boolean);
+.filter(Boolean);
 }
 
 function renderProject(index) {
 
-    const project = projects[index];
+const project = projects[index];
 
-    const desktopHeight = parseFloat(project.desktopheight);
-    const mobileHeight = parseFloat(project.mobileheight);
+const desktopHeight = parseFloat(project.desktopheight);
+const mobileHeight = parseFloat(project.mobileheight);
 
-    if (!project) return;
+if (!project) return;
 
-    const bg =
-    (project.bg || '').trim();
+const bg =
+(project.bg || '').trim();
 
-    leftContainer.style.backgroundColor =
-        bg || '#ffffff';
+leftContainer.style.backgroundColor =
+bg || '#ffffff';
 
-    const images = getImages(project);
+const images = getImages(project);
 
-    projectTitle.textContent =
-        project.title || 'Untitled';
+projectTitle.textContent =
+project.title || 'Untitled';
 
-    projectDescription.textContent =
-        project.description || '';
+projectDescription.textContent =
+project.description || '';
 
-    projectViewer.innerHTML = '';
+projectViewer.innerHTML = '';
 
-    if (!images.length) return;
+if (!images.length) return;
 
-    const img = document.createElement('img');
+const img = document.createElement('img');
 
-    const customHeight =
-    window.innerWidth <= 768
-        ? parseFloat(project.mobileheight)
-        : parseFloat(project.desktopheight);
+const customHeight =
+window.innerWidth <= 768
+? parseFloat(project.mobileheight)
+: parseFloat(project.desktopheight);
 
-    img.alt = project.title || 'Project image';
+img.alt = project.title || 'Project image';
 
-    img.loading = 'eager';
+img.loading = 'eager';
 
-    img.decoding = 'sync';
+img.decoding = 'sync';
 
-    img.fetchPriority = 'high';
+img.fetchPriority = 'high';
 
-    img.style.visibility = 'hidden';
+img.style.visibility = 'hidden';
 
-    img.onload = () => {
+img.onload = () => {
 
-    const isMobile = window.innerWidth <= 768;
+const isMobile = window.innerWidth <= 768;
 
-    const customHeight = isMobile
-        ? mobileHeight
-        : desktopHeight;
+const customHeight = isMobile
+? mobileHeight
+: desktopHeight;
 
-    if (!isNaN(customHeight)) {
+if (!isNaN(customHeight)) {
 
-        img.style.height = `${customHeight}dvh`;
-        img.style.width = "auto";
-        img.style.maxWidth = "100vw";
+img.style.height = `${customHeight}dvh`;
+img.style.width = "auto";
+img.style.maxWidth = "100vw";
 
-    } else if (img.naturalWidth > img.naturalHeight) {
+} else if (img.naturalWidth > img.naturalHeight) {
 
-        img.classList.add("horizontal");
+img.classList.add("horizontal");
 
-    } else {
+} else {
 
-        img.classList.add("vertical");
+img.classList.add("vertical");
 
-    }
+}
 
-    img.style.visibility = "visible";
+img.style.visibility = "visible";
 };
 
-    img.src = images[0];
+img.src = images[0];
 
-    projectViewer.appendChild(img);
+projectViewer.appendChild(img);
 }
 
 function nextProjectFunc() {
 
-    currentIndex++;
+currentIndex++;
 
-    if (currentIndex >= projects.length) {
-        currentIndex = 0;
-    }
+if (currentIndex >= projects.length) {
+currentIndex = 0;
+}
 
-    renderProject(currentIndex);
+renderProject(currentIndex);
 }
 
 function prevProjectFunc() {
 
-    currentIndex--;
+currentIndex--;
 
-    if (currentIndex < 0) {
-        currentIndex = projects.length - 1;
-    }
+if (currentIndex < 0) {
+currentIndex = projects.length - 1;
+}
 
-    renderProject(currentIndex);
+renderProject(currentIndex);
 }
 
 nextProject.addEventListener(
-    'click',
-    nextProjectFunc
+'click',
+nextProjectFunc
 );
 
 prevProject.addEventListener(
-    'click',
-    prevProjectFunc
+'click',
+prevProjectFunc
 );
 
 document.addEventListener(
-    'keydown',
-    e => {
+'keydown',
+e => {
 
-    if (e.key === 'ArrowRight') {
-        nextProjectFunc();
-    }
+if (e.key === 'ArrowRight') {
+nextProjectFunc();
+}
 
-    if (e.key === 'ArrowLeft') {
-        prevProjectFunc();
-    }
+if (e.key === 'ArrowLeft') {
+prevProjectFunc();
+}
 });
 
 async function loadProjects() {
 
-    try {
+try {
 
-        const response =
-            await fetch(sheetCsvUrl);
+const response =
+await fetch(sheetCsvUrl);
 
-        const csv =
-            await response.text();
+const csv =
+await response.text();
 
-        projects = parseCsv(csv);
+projects = parseCsv(csv);
 
-        renderProject(currentIndex);
+renderProject(currentIndex);
 
-    } catch (error) {
+} catch (error) {
 
-        console.error(error);
+console.error(error);
 
-        projectTitle.textContent =
-            'Unable to load projects.';
-    }
+projectTitle.textContent =
+'Unable to load projects.';
+}
 }
 
 loadProjects();
 
 document.addEventListener(
-    'mousemove',
-    e => {
+'mousemove',
+e => {
 
-    customCursor.style.left =
-        e.clientX + 'px';
+customCursor.style.left =
+e.clientX + 'px';
 
-    customCursor.style.top =
-        e.clientY + 'px';
+customCursor.style.top =
+e.clientY + 'px';
 });
 
 document.addEventListener(
-    'mousedown',
-    () => {
+'mousedown',
+() => {
 
-    customCursor.style.color =
-        '#ff9900';
+customCursor.style.color =
+'#ff9900';
 });
 
 document.addEventListener(
-    'mouseup',
-    () => {
+'mouseup',
+() => {
 
-    customCursor.style.color =
-        'white';
+customCursor.style.color =
+'white';
 });
 
 document
 .getElementById('aboutLink')
 
 .addEventListener(
-    'click',
-    e => {
+'click',
+e => {
 
-    e.preventDefault();
+e.preventDefault();
 
-    document
-        .getElementById('thirdContainer')
-        .classList.add('active');
+document
+.getElementById('thirdContainer')
+.classList.add('active');
 });
 
 document
 .getElementById('closeAbout')
 
 .addEventListener(
-    'click',
-    e => {
+'click',
+e => {
 
-    e.preventDefault();
+e.preventDefault();
 
-    document
-        .getElementById('thirdContainer')
-        .classList.remove('active');
+document
+.getElementById('thirdContainer')
+.classList.remove('active');
 });
 
 </script>
