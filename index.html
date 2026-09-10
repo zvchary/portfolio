@@ -99,11 +99,6 @@ a:hover {
     align-items: center;
     overflow: hidden;
     position: relative;
-    object-fit: contain;
-    image-rendering: auto;
-    backface-visibility: hidden;
-    transform: translateZ(0);
-    transition: opacity 0.5s ease;
 }
 
 .project-viewer img {
@@ -111,7 +106,7 @@ a:hover {
     object-fit: contain;
     image-rendering: auto;
     backface-visibility: hidden;
-    transform: translateZ(0);
+    transform: none;
     will-change: opacity;
     opacity: 1;
     transition: opacity 0.5s ease;
@@ -662,14 +657,9 @@ function renderProject(index) {
         });
 
         setTimeout(() => {
-
-            if (
-                oldImg &&
-                oldImg.parentNode
-            ) {
+            if (oldImg && oldImg.parentNode) {
                 oldImg.remove();
             }
-
         }, 500);
     };
 
