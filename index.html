@@ -114,6 +114,7 @@ a:hover {
     transform: translateZ(0);
     will-change: opacity;
     opacity: 1;
+    transition: opacity 0.5s ease;
 }
 
 .project-viewer img.vertical {
@@ -578,10 +579,10 @@ function renderProject(index) {
 
     const project = projects[index];
 
-    if (!project) return;
-
     const desktopHeight = parseFloat(project.desktopheight);
     const mobileHeight = parseFloat(project.mobileheight);
+
+    if (!project) return;
 
     const bg =
         (project.bg || '').trim();
@@ -604,24 +605,29 @@ function renderProject(index) {
 
     const img = document.createElement('img');
 
-    const isMobile =
-        window.innerWidth <= 768;
-
     const customHeight =
-        isMobile
-            ? mobileHeight
-            : desktopHeight;
+        window.innerWidth <= 768
+            ? parseFloat(project.mobileheight)
+            : parseFloat(project.desktopheight);
 
-    img.alt =
-        project.title || 'Project image';
+    img.alt = project.title || 'Project image';
 
     img.loading = 'eager';
+
     img.decoding = 'sync';
+
     img.fetchPriority = 'high';
 
     img.style.opacity = '0';
 
     img.onload = () => {
+
+        const isMobile =
+            window.innerWidth <= 768;
+
+        const customHeight = isMobile
+            ? mobileHeight
+            : desktopHeight;
 
         if (!isNaN(customHeight)) {
 
@@ -629,6 +635,7 @@ function renderProject(index) {
                 `${customHeight}dvh`;
 
             img.style.width = "auto";
+
             img.style.maxWidth = "100vw";
 
         } else if (
@@ -641,29 +648,29 @@ function renderProject(index) {
         } else {
 
             img.classList.add("vertical");
+
         }
 
-        // Put the new image into the viewer
         projectViewer.appendChild(img);
 
-        // Trigger fade in
         requestAnimationFrame(() => {
             img.style.opacity = '1';
+
+            if (oldImg) {
+                oldImg.style.opacity = '0';
+            }
         });
 
-        // Fade out and remove previous image
-        if (oldImg) {
+        setTimeout(() => {
 
-            oldImg.style.opacity = '0';
+            if (
+                oldImg &&
+                oldImg.parentNode
+            ) {
+                oldImg.remove();
+            }
 
-            setTimeout(() => {
-
-                if (oldImg.parentNode) {
-                    oldImg.remove();
-                }
-
-            }, 500);
-        }
+        }, 500);
     };
 
     img.src = images[0];
