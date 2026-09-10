@@ -35,6 +35,10 @@ a {
     text-decoration: none;
 }
 
+h1{
+    font-size: 1rem;
+}
+
 ::selection {
   background-color: #000000;
 }
@@ -106,10 +110,9 @@ a:hover {
     object-fit: contain;
     image-rendering: auto;
     backface-visibility: hidden;
-    transform: none;
+    transform: translateZ(0);
     will-change: opacity;
     opacity: 1;
-    transition: opacity 0.5s ease;
 }
 
 .project-viewer img.vertical {
@@ -265,12 +268,10 @@ a:hover {
     }
 
      .project-viewer img.vertical {
-        height: 100dvh;
         width: auto;
         max-width: 100vw;
     }
     .project-viewer img.horizontal {
-        height: 85dvh;
         width: auto;
         max-width: 140vw;
     }
@@ -320,7 +321,7 @@ a:hover {
 
     <div class="third-inner">
 
-        <p>
+        <p><h1>
             I'm a multidisciplinary designer based in Richmond, VA.
             I'm currently a Studio Monitor & Instructor at
             <a href="https://www.studiotwothree.org/">
@@ -330,40 +331,18 @@ a:hover {
             <a href="https://commonwealthtimes.org/">
                 The Commonwealth Times
             </a>,
-            and am actively freelancing. 
-            <br/><br/>
-            My practice specializes in editorial/layout design and physical typographic printing.
-            Recent work explores constraints, production, precedents, and translation.
+            and am actively freelancing.
+            </h1>
         </p>
 
         <br/>
 
         <p>
-            Past clients + collaborations include:<br/>
-            <a href="https://icavcu.org/">
-                Institute for Contemporary Art at Virginia Commonwealth University
-            </a><br/>
-            <a href="https://engage.richmond.edu/">
-               University of Richmond Bonner Center for Civic Engagement
-            </a><br/>
-            <a href="https://arts.vcu.edu/community-campus/the-anderson/">
-               VCUarts The Anderson
-            </a><br/>
-             <a href="https://www.clog-online.com/">
-               CLOG Magazine
-            </a><br/>
-             <a href="https://ours.today/">
-               Ours
-            </a><br/>
-            <a href="https://thealiens.online/">
-               The Aliens
-            </a><br/>
-             <a href="https://www.acluva.org/">
-               ACLU of Virginia
-            </a>
+            My practice specializes in editorial/layout design and physical typographic printing.
+            Recent work explores constraints, production, precedents, and translation.
         </p>
 
-        <br/>✻<br/><br/>
+        <br/>
 
         <a href="mailto:zm@zachmontgomery.us">
             zm@zachmontgomery.us
@@ -580,7 +559,7 @@ function renderProject(index) {
     if (!project) return;
 
     const bg =
-        (project.bg || '').trim();
+    (project.bg || '').trim();
 
     leftContainer.style.backgroundColor =
         bg || '#ffffff';
@@ -593,17 +572,16 @@ function renderProject(index) {
     projectDescription.textContent =
         project.description || '';
 
-    if (!images.length) return;
+    projectViewer.innerHTML = '';
 
-    const oldImg =
-        projectViewer.querySelector('img');
+    if (!images.length) return;
 
     const img = document.createElement('img');
 
     const customHeight =
-        window.innerWidth <= 768
-            ? parseFloat(project.mobileheight)
-            : parseFloat(project.desktopheight);
+    window.innerWidth <= 768
+        ? parseFloat(project.mobileheight)
+        : parseFloat(project.desktopheight);
 
     img.alt = project.title || 'Project image';
 
@@ -613,57 +591,38 @@ function renderProject(index) {
 
     img.fetchPriority = 'high';
 
-    img.style.opacity = '0';
+    img.style.visibility = 'hidden';
 
     img.onload = () => {
 
-        const isMobile =
-            window.innerWidth <= 768;
+    const isMobile = window.innerWidth <= 768;
 
-        const customHeight = isMobile
-            ? mobileHeight
-            : desktopHeight;
+    const customHeight = isMobile
+        ? mobileHeight
+        : desktopHeight;
 
-        if (!isNaN(customHeight)) {
+    if (!isNaN(customHeight)) {
 
-            img.style.height =
-                `${customHeight}dvh`;
+        img.style.height = `${customHeight}dvh`;
+        img.style.width = "auto";
+        img.style.maxWidth = "100vw";
 
-            img.style.width = "auto";
+    } else if (img.naturalWidth > img.naturalHeight) {
 
-            img.style.maxWidth = "100vw";
+        img.classList.add("horizontal");
 
-        } else if (
-            img.naturalWidth >
-            img.naturalHeight
-        ) {
+    } else {
 
-            img.classList.add("horizontal");
+        img.classList.add("vertical");
 
-        } else {
+    }
 
-            img.classList.add("vertical");
-
-        }
-
-        projectViewer.appendChild(img);
-
-        requestAnimationFrame(() => {
-            img.style.opacity = '1';
-
-            if (oldImg) {
-                oldImg.style.opacity = '0';
-            }
-        });
-
-        setTimeout(() => {
-            if (oldImg && oldImg.parentNode) {
-                oldImg.remove();
-            }
-        }, 500);
-    };
+    img.style.visibility = "visible";
+};
 
     img.src = images[0];
+
+    projectViewer.appendChild(img);
 }
 
 function nextProjectFunc() {
