@@ -77,7 +77,16 @@ font-size: 1rem;
 }
 
 .right-container {
-width: 55vh;
+    width: 65vh;
+    height: 100px;
+    overflow-y: auto;
+    box-shadow: none;
+    border-radius: 0px 0px 25px 25px;
+    transition: box-shadow 0.2s ease;
+}
+
+.right-container.has-overflow {
+    box-shadow: inset 0px -10px 20px -15px #ffffff80;
 }
 
 .project-title {
@@ -88,6 +97,8 @@ margin-right: 2px;
 
 .project-description {
 line-height: 1.35;
+margin-left: 25px;
+margin-right: 25px;
 }
 
 .project-viewer {
@@ -169,13 +180,13 @@ color: orange;
 
 .third-container {
 position: fixed;
-outline: rgba(255, 255, 255, 0.165) inset 1px;
+outline: rgba(255, 255, 255, 0.459) solid 1px;
 top: 0;
 left: -100%;
 width: 98vw;
 height: 100dvh;
 border-radius: 0px 45px 45px 0px;
-box-shadow: 5px 0px 15px rgba(0, 0, 0, 0.066);
+box-shadow: inset 0 0 30px #ffffff2b, 0 0 50px #03030357;
 backdrop-filter: blur(30px);
 -webkit-backdrop-filter: blur(30px);
 padding: 36px;
@@ -267,6 +278,10 @@ background: rgba(0, 0, 0, 0.297);
 mix-blend-mode:normal;
 backdrop-filter: blur(30px);
 -webkit-backdrop-filter: blur(30px);
+}
+
+.project-description {
+   margin: 0px;
 }
 
 .project-viewer img.vertical {
@@ -695,6 +710,36 @@ if (e.key === 'ArrowLeft') {
 prevProjectFunc();
 }
 });
+
+const rightContainer = document.querySelector('.right-container');
+const projectDescriptionContainer = document.querySelector('.project-description');
+
+function checkDescriptionOverflow() {
+    const hasOverflow =
+        rightContainer.scrollHeight > rightContainer.clientHeight + 1;
+
+    rightContainer.classList.toggle('has-overflow', hasOverflow);
+}
+
+// Check when the description changes
+const descriptionObserver = new MutationObserver(checkDescriptionOverflow);
+
+descriptionObserver.observe(projectDescriptionContainer, {
+    childList: true,
+    subtree: true,
+    characterData: true
+});
+
+// Check when the container or viewport resizes
+const resizeObserver = new ResizeObserver(checkDescriptionOverflow);
+
+resizeObserver.observe(rightContainer);
+resizeObserver.observe(projectDescriptionContainer);
+
+window.addEventListener('resize', checkDescriptionOverflow);
+
+// Initial check
+checkDescriptionOverflow();
 
 async function loadProjects() {
 
