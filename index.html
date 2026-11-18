@@ -314,7 +314,7 @@ max-width: 140vw;
 
 <div class="title-stack">
 
-<a href="index.html" class="logo">
+<a href="/" class="logo">
 ✻ Zach Montgomery
 </a>
 
@@ -601,10 +601,10 @@ function renderProject(index) {
 
 const project = projects[index];
 
+if (!project) return;
+
 const desktopHeight = parseFloat(project.desktopheight);
 const mobileHeight = parseFloat(project.mobileheight);
-
-if (!project) return;
 
 const bg =
 (project.bg || '').trim();
@@ -673,27 +673,101 @@ img.src = images[0];
 projectViewer.appendChild(img);
 }
 
-function nextProjectFunc() {
+// Return a URL-safe identifier for a project.
+// A spreadsheet column named "slug" takes priority. If it is blank,
+// the project title is converted to a slug automatically.
+function getProjectSlug(project) {
+    if (!project) return '';
 
-currentIndex++;
-
-if (currentIndex >= projects.length) {
-currentIndex = 0;
+    return (
+        project.slug ||
+        (project.title || '')
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '')
+    ).trim().toLowerCase();
 }
 
-renderProject(currentIndex);
+// Read the project identifier from the current URL path.
+function getSlugFromURL() {
+    return decodeURIComponent(window.location.pathname)
+        .replace(/^\/+|\/+$/g, '')
+        .toLowerCase();
+}
+
+// Change the address bar without reloading the page.
+function updateProjectURL(project, replace = false) {
+    const slug = getProjectSlug(project);
+    if (!slug) return;
+
+    const newURL = '/' + encodeURIComponent(slug);
+    const method = replace ? 'replaceState' : 'pushState';
+
+    window.history[method](
+        { projectSlug: slug },
+        '',
+        newURL
+    );
+}
+
+// Display the project requested by the URL. The homepage shows
+// the first project in the spreadsheet.
+function loadProjectFromURL() {
+    if (!projects.length) return;
+
+    const slug = getSlugFromURL();
+
+    if (!slug) {
+        currentIndex = 0;
+        renderProject(currentIndex);
+        return;
+    }
+
+    const matchingIndex = projects.findIndex(project =>
+        getProjectSlug(project) === slug
+    );
+
+    if (matchingIndex !== -1) {
+        currentIndex = matchingIndex;
+        renderProject(currentIndex);
+    } else {
+        // Unknown paths fall back to the homepage instead of leaving
+        // the address bar pointing to a project that was not found.
+        currentIndex = 0;
+        renderProject(currentIndex);
+        window.history.replaceState({}, '', '/');
+    }
+}
+
+function nextProjectFunc() {
+    if (!projects.length) return;
+
+    currentIndex++;
+
+    if (currentIndex >= projects.length) {
+        currentIndex = 0;
+    }
+
+    renderProject(currentIndex);
+    updateProjectURL(projects[currentIndex]);
 }
 
 function prevProjectFunc() {
+    if (!projects.length) return;
 
-currentIndex--;
+    currentIndex--;
 
-if (currentIndex < 0) {
-currentIndex = projects.length - 1;
+    if (currentIndex < 0) {
+        currentIndex = projects.length - 1;
+    }
+
+    renderProject(currentIndex);
+    updateProjectURL(projects[currentIndex]);
 }
 
-renderProject(currentIndex);
-}
+// Keep project navigation in sync with the browser's back/forward buttons.
+window.addEventListener('popstate', () => {
+    loadProjectFromURL();
+});
 
 nextProject.addEventListener(
 'click',
@@ -760,7 +834,8 @@ await response.text();
 
 projects = parseCsv(csv);
 
-renderProject(currentIndex);
+// Wait until the spreadsheet is loaded before resolving the URL.
+loadProjectFromURL();
 
 } catch (error) {
 
