@@ -314,7 +314,7 @@ max-width: 140vw;
 
 <div class="title-stack">
 
-<a href="/" class="logo">
+<a href="index.html" class="logo">
 ✻ Zach Montgomery
 </a>
 
@@ -601,10 +601,10 @@ function renderProject(index) {
 
 const project = projects[index];
 
-if (!project) return;
-
 const desktopHeight = parseFloat(project.desktopheight);
 const mobileHeight = parseFloat(project.mobileheight);
+
+if (!project) return;
 
 const bg =
 (project.bg || '').trim();
@@ -674,35 +674,26 @@ projectViewer.appendChild(img);
 }
 
 function nextProjectFunc() {
-    if (!projects.length) return;
 
-    currentIndex++;
+currentIndex++;
 
-    if (currentIndex >= projects.length) {
-        currentIndex = 0;
-    }
+if (currentIndex >= projects.length) {
+currentIndex = 0;
+}
 
-    renderProject(currentIndex);
-    updateProjectURL(projects[currentIndex]);
+renderProject(currentIndex);
 }
 
 function prevProjectFunc() {
-    if (!projects.length) return;
 
-    currentIndex--;
+currentIndex--;
 
-    if (currentIndex < 0) {
-        currentIndex = projects.length - 1;
-    }
-
-    renderProject(currentIndex);
-    updateProjectURL(projects[currentIndex]);
+if (currentIndex < 0) {
+currentIndex = projects.length - 1;
 }
 
-// Keep project navigation in sync with the browser's back/forward buttons.
-window.addEventListener('popstate', () => {
-    loadProjectFromURL();
-});
+renderProject(currentIndex);
+}
 
 nextProject.addEventListener(
 'click',
@@ -769,8 +760,7 @@ await response.text();
 
 projects = parseCsv(csv);
 
-// Wait until the spreadsheet is loaded before resolving the URL.
-loadProjectFromURL();
+renderProject(currentIndex);
 
 } catch (error) {
 
@@ -842,4 +832,3 @@ document
 
 </body>
 </html>
-
